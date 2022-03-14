@@ -22,7 +22,7 @@ fig = uifigure;
     pnl2 = uipanel(fig);
         img2 = uiimage(pnl2, 'ImageSource', img4);
 
-%Giving up/creating two separate figures (fig has exp_pic and slider), fig2  
+%Giving up/creating two separate figures (fig has exp_pic and slider), fig2 has given_pic only 
 fig = uifigure;
     pnl = uipanel(fig);
         img = uiimage(pnl,'ImageSource',exp_img);
@@ -31,5 +31,20 @@ fig = uifigure;
 
 fig2 = uifigure;
     img2 = uiimage(fig2, 'ImageSource', given_img);
+
+%Different combination of figures/slider
+figure %color blocks
+    subplot(1,2,1)
+        imshow(exp_img);
+    subplot(1,2,2)
+        imshow(given_img);
+
+fig = uifigure; %slider
+    pnl = uipanel(fig, 'Title', 'Slider','BackgroundColor',[122/255 249/255 243/255],'Position',[75 50 300 300]);
+    img = uiimage(pnl,'ImageSource',exp_img);
+    sld = uislider(pnl, 'Position',[75 50 150 3]);
+    sld.Limits = [0,255];
+
+    pnl2 = uipanel(fig, 'Title','Given Color')
         
     

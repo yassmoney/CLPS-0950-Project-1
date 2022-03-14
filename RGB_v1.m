@@ -1,4 +1,5 @@
-%RGB Anomaloscope 
+%RGB Anomaloscope - Roshan's Workspace
+%RGB_v1
 
 r_given = randi([100,220],1)
 g_given = randi([100,220],1)
@@ -40,7 +41,16 @@ figure %color blocks
         imshow(given_img);
 
 fig = uifigure; %slider
-    sld = uislider(fig,'Position',[75 50 150 3]);
+    fig.Color = [122/255 249/255 243/255];
+    %set(gcf, 'color', [1 1 1])
+    pnl = uipanel(fig, 'Title', 'Slider','BackgroundColor',[1 1 1],'Position',[25 50 300 300]);
+    img = uiimage(pnl,'ImageSource',exp_img);
+    sld = uislider(pnl, 'Position',[75 50 150 3]);
     sld.Limits = [0,255];
+
+    pnl2 = uipanel(fig, 'Title','Given Color','BackgroundColor',...
+        [1 1 1], 'Position', [400 50 300 300]);
+    img = uiimage(pnl2, 'ImageSource',given_img);
+
         
     
