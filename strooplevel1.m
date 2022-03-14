@@ -28,7 +28,7 @@ incongruenterrors= [];
 %Running the Stroop Test Trials for congruent trials
 for ii= 1:trials % setting this to run the indicated number of trials
     display= randi(numberofcolors) % randomly choosing a number correlated to a color to display
-    displaytext= words(display) %using the randomly chosen color to display the word
+    displaytext= words(display)  %using the randomly chosen color to display the word
     displaycolor=colors(display)%using the randomly chosen color to color the word
  tic; %starting a timer
  congruentpairs(ii,:)= clock; %creating an array for data of the congruent pairs
@@ -39,6 +39,20 @@ for ii= 1:trials % setting this to run the indicated number of trials
 
  congruentdata = [congruentdata,time]
   
+for ii = 1:trials %creating the stroop test for incongruent trials)
+    display = randi(numberofcolors); % randomly choosing a number correlated to a color to display
+    displaycolor = colors(display); %using the randomly chosen color to display the word
+    jj = display; 
+ 
+    while jj == display
+        jj = randi(numberofcolors); %choosing color for the world
+    end
+     displaytext = colors(display); %using the randomly chosen color to display the word
+     tic; %starting a timer
+     incongruentpairs(ii,:)= clock;%creating an array for data of the incongruent pairs
+     response= getkey(); 
+     time=toc;
+
 
 
 
