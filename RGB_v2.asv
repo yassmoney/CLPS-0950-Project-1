@@ -15,12 +15,12 @@ given_mat = ones(500,'uint8');
 img = cat(3, r_given*given_mat, g_given*given_mat, b_given*given_mat);
 fig = uifigure('Position',[100 100 350 275]);
 redChannel = img(:,:,1);
-
+disp(redChannel)
 
 %print image and slider on the same figure
 im = uiimage(fig,'Position',[100 100 120 120]);
 im.ImageSource = img;
-sld = uislider(fig, 'Position',[100 75 120 3]);
+sld = uislider(fig, 'Position',[100 75 120 3], 'ValueChangedFcn',@(sld,event) updatedimg(sld,redChannel));
 %set limits of slider to limits of r_given color channel
 sld.Limits = [100 220];
 
