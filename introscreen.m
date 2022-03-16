@@ -14,3 +14,7 @@ figure
 imshow(RGB)
 
 
+%% Exit Page %%
+
+
+
