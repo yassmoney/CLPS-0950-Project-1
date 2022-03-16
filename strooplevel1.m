@@ -26,16 +26,22 @@ incongruenterrors= [];
 
 
 %Running the Stroop Test Trials for congruent trials
+
+
 for ii= 1:trials % setting this to run the indicated number of trials
     display= randi(numberofcolors) % randomly choosing a number correlated to a color to display
     displaytext= words(display)  %using the randomly chosen color to display the word
     displaycolor=colors(display)%using the randomly chosen color to color the word
  tic; %starting a timer
  congruentpairs(ii,:)= clock; %creating an array for data of the congruent pairs
- response= getkey(); 
+ waitforbuttonpress
+ response= double(get(gcf,'CurrentCharacter'))
  time=toc;
 
- if response == 114
+
+
+ if response == 114 && display==0
+     
 
  congruentdata = [congruentdata,time]
   
