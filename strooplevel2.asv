@@ -74,7 +74,7 @@ wordList = {'PINK', 'ORANGE', 'LAVENDER', 'MAROON'};
 rgbColors = [0.9 0.6 0.1; 1 0.6 0; 0.9 0.6 1; 0.5 0 0.1];
 
 % Make the matrix which will determine our condition combinations
-condMatrixBase = [sort(repmat([1 2 3 4], 1, 4)); repmat([1 2 3 4], 1, 4)];
+condMatrixBase = [sort(repmat([1 2 3 4], 1, 3)); repmat([1 2 3 4], 1, 3)];
 
 % Number of trials per condition. We set this to one to give
 % us a total of 16 trials.
@@ -126,7 +126,7 @@ for trial = 1:numTrials
             'center', 'center', black);
         Screen('Flip', window);
         KbStrokeWait;
-        DrawFormattedText(window, 'A word will appear on your screen \n\n and will be colored either pink, orange, lavender or maroon. \n\n If green, press the g key! \n\n If red, press the r key! \n\n If yellow, press the y key!, \n\n If blue, press the b key! \n\n Press any key to start!! \n\n  You can quit anytime by pressing ESC!','center', 'center', black);
+        DrawFormattedText(window, 'A word will appear on your screen \n\n and will be colored either pink, orange, lavender or maroon. \n\n If pink, press the P key! \n\n If orange, press the O key! \n\n If lavender, press the L key!, \n\n If maroon, press the M key! \n\n Press any key to start!! \n\n  You can quit anytime by pressing ESC!','center', 'center', black);
         Screen('Flip', window);
         KbStrokeWait;
     end
@@ -196,7 +196,7 @@ end
 
 % Result Data
 
-disp(average(rt))
+averagereactiontime = 
 
 
 % End of experiment screen. We clear the screen once they have made their
