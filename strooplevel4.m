@@ -59,11 +59,11 @@ waitframes = 1;
 % Define the keyboard keys that are listened for. We will be using the left
 % and right arrow keys as response keys for the task and the escape key as
 % a exit/reset key
-escapeKey = KbName('ESCAPE');
-leftKey = KbName('LeftArrow');
-rightKey = KbName('RightArrow');
-downKey = KbName('DownArrow');
-
+grassgreenKey = KbName('g');
+ferngreenKey = KbName('f');
+verdantgreenKey = KbName('v');
+christmasgreenKey = KbName('c');
+escapeKey= KbName('ESCAPE');
 
 
 %----------------------------------------------------------------------
@@ -71,11 +71,11 @@ downKey = KbName('DownArrow');
 %----------------------------------------------------------------------
 
 % We are going to use four colors!
-wordList = {'RED', 'GREEN', 'BLUE', 'YELLOW'};
-rgbColors = [1 0 0; 0 1 0; 0 0 1; 1 1 0];
+wordList = {'GRASS GREEN', 'FERN GREEN', 'VERDANT GREEN', 'CHRISTMAS GREEN'};
+rgbColors = [0.2 0.8 0; 0.2 0.7 0.1; 0.2 0.7 0.3; 0.2 0.9 0.5];
 
 % Make the matrix which will determine our condition combinations
-condMatrixBase = [sort(repmat([1 2 3 4], 1, 4)); repmat([1 2 3 4], 1, 4)];
+condMatrixBase = [sort(repmat([1 2 3 4], 1, 3)); repmat([1 2 3 4], 1, 3)];
 
 % Number of trials per condition. We set this to one to give
 % us a total of 16 trials.
@@ -123,12 +123,11 @@ for trial = 1:numTrials
     % If this is the first trial we present a start screen and wait for a
     % key-press
     if trial == 1
-        DrawFormattedText(window, 'Welcome to the Stroop Test Level 1! \n\n Press any key to see instructions!',...
+        DrawFormattedText(window, 'Welcome to the Stroop Test Level 4! \n\n Press any key to see instructions!',...
             'center', 'center', black);
         Screen('Flip', window);
         KbStrokeWait;
-        DrawFormattedText(window, 'A word will appear on your screen \n\n and will be colored either red, yellow, green or blue. \n\n You will press the left arrow key if the word matches \n\n the color and the left arrow key if they do not match. \n\n Press any key to start!',...
-            'center', 'center', black);
+        DrawFormattedText(window, 'A word will appear on your screen \n\n and will be colored either grass green, fern green, verdant green or Christmas green. \n\n If grass green, press the G key! \n\n If fern green, press the F key! \n\n If verdant green, press the V key!, \n\n If Christmas green, press the C key! \n\n Press any key to start!! \n\n  You can quit anytime by pressing ESC!','center', 'center', black);
         Screen('Flip', window);
         KbStrokeWait;
     end
@@ -197,13 +196,13 @@ for trial = 1:numTrials
 end
 
 % Result Data
-
-disp(average(rt))
+averagereaction = sum(respMat(4,:));
+averagert = averagereaction/12;
 
 
 % End of experiment screen. We clear the screen once they have made their
 % response
-DrawFormattedText(window, 'You have completed Level One! \n\n Press any key to see your results',...
+DrawFormattedText(window, 'You have completed Level Four! \n\n Press any key to see your results',...
     'center', 'center', black);
 Screen('Flip', window);
 KbStrokeWait;

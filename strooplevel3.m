@@ -196,14 +196,13 @@ for trial = 1:numTrials
 end
 
 % Result Data
-
-averagereaction = sum(respMat(4,:))
-averagert = averagereaction/12
+averagereaction = sum(respMat(4,:));
+averagert = averagereaction/12;
 
 
 % End of experiment screen. We clear the screen once they have made their
 % response
-DrawFormattedText(window, 'You have completed Level One! \n\n Press any key to see your results',...
+DrawFormattedText(window, 'You have completed Level Three! \n\n Press any key to see your results',...
     'center', 'center', black);
 Screen('Flip', window);
 KbStrokeWait;
