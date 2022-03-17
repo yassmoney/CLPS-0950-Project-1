@@ -74,7 +74,7 @@ wordList = {'PINK', 'ORANGE', 'LAVENDER', 'MAROON'};
 rgbColors = [0.9 0.6 0.1; 1 0.6 0; 0.9 0.6 1; 0.5 0 0.1];
 
 % Make the matrix which will determine our condition combinations
-condMatrixBase = [sort(repmat([1 2 3 4], 1, 4)); repmat([1 2 3 4], 1, 4)];
+condMatrixBase = [sort(repmat([1 2 3 4], 1, 3)); repmat([1 2 3 4], 1, 3)];
 
 % Number of trials per condition. We set this to one to give
 % us a total of 16 trials.
@@ -196,7 +196,9 @@ end
 
 % Result Data
 
-disp(average(rt))
+averagereaction = sum(respMat(4,:))
+averagert = averagereaction/12
+
 
 
 % End of experiment screen. We clear the screen once they have made their
