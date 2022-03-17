@@ -71,7 +71,7 @@ escapeKey= KbName('ESCAPE');
 
 % We are going to use four colors!
 wordList = {'PINK', 'ORANGE', 'LAVENDER', 'MAROON'};
-rgbColors = [0.9 0.6 0.1; 1 0.6 0; 0.9 0.6 1; 0.5 0 0.1];
+rgbColors = [0.9 0.6 0.7; 1 0.6 0; 0.9 0.6 1; 0.5 0 0.1];
 
 % Make the matrix which will determine our condition combinations
 condMatrixBase = [sort(repmat([1 2 3 4], 1, 3)); repmat([1 2 3 4], 1, 3)];
@@ -169,13 +169,16 @@ for trial = 1:numTrials
             ShowCursor;
             sca;
             return
-        elseif keyCode(leftKey)
+        elseif keyCode(pinkKey)
             response = 1;
             respToBeMade = false;
-        elseif keyCode(downKey)
+        elseif keyCode(maroonKey)
             response = 2;
             respToBeMade = false;
-        elseif keyCode(rightKey)
+        elseif keyCode(orangeKey)
+            response = 3;
+            respToBeMade = false;
+        elseif keyCode(lavenderKey)
             response = 3;
             respToBeMade = false;
         end
@@ -191,6 +194,12 @@ for trial = 1:numTrials
     respMat(2, trial) = colorNum;
     respMat(3, trial) = response;
     respMat(4, trial) = rt;
+   
+    if colorNum == response
+    respMat(5,trial) = 1
+ else
+     respMat(5,trial)= 0
+    end
 
 end
 
