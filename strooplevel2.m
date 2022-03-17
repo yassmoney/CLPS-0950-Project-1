@@ -59,20 +59,19 @@ waitframes = 1;
 % Define the keyboard keys that are listened for. We will be using the left
 % and right arrow keys as response keys for the task and the escape key as
 % a exit/reset key
-escapeKey = KbName('ESCAPE');
-leftKey = KbName('LeftArrow');
-rightKey = KbName('RightArrow');
-downKey = KbName('DownArrow');
-
-
+pinkKey = KbName('p');
+orangeKey = KbName('o');
+lavenderKey = KbName('l');
+maroonKey = KbName('m');
+escapeKey= KbName('ESCAPE');
 
 %----------------------------------------------------------------------
 %                     Colors in words and RGB
 %----------------------------------------------------------------------
 
 % We are going to use four colors!
-wordList = {'RED', 'GREEN', 'BLUE', 'YELLOW'};
-rgbColors = [1 0 0; 0 1 0; 0 0 1; 1 1 0];
+wordList = {'PINK', 'GREEN', 'BLUE', 'YELLOW'};
+rgbColors = [0.9 0.6 0.1; 1 0.6 0; 0.9 0.6 1; 0.5 0 0.1];
 
 % Make the matrix which will determine our condition combinations
 condMatrixBase = [sort(repmat([1 2 3 4], 1, 4)); repmat([1 2 3 4], 1, 4)];
