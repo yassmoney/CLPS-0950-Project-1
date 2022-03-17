@@ -72,7 +72,7 @@ escapeKey= KbName('ESCAPE');
 
 % We are going to use four colors!
 wordList = {'SKY BLUE', 'WATER BLUE', 'DARK BLUE', 'ROYAL BLUE'};
-rgbColors = [0.2 0.6 1; 0.3 0.8 0.9; 0.2 0.1 0.4; 0.1 0 0.4];
+rgbColors = [0.2 0.6 1; 0.3 0.8 0.9; 0.2 0.1 0.4; 0.1 0.1 0.8];
 
 % Make the matrix which will determine our condition combinations
 condMatrixBase = [sort(repmat([1 2 3 4], 1, 3)); repmat([1 2 3 4], 1, 3)];
@@ -170,14 +170,17 @@ for trial = 1:numTrials
             ShowCursor;
             sca;
             return
-        elseif keyCode(leftKey)
+        elseif keyCode(skyblueKey)
             response = 1;
             respToBeMade = false;
-        elseif keyCode(downKey)
+        elseif keyCode(waterblueKey)
             response = 2;
             respToBeMade = false;
-        elseif keyCode(rightKey)
+        elseif keyCode(darkblueKey)
             response = 3;
+            respToBeMade = false;
+        elseif keyCode(royalblueKey)
+            response = 4;
             respToBeMade = false;
         end
 
@@ -207,7 +210,14 @@ DrawFormattedText(window, 'You have completed Level One! \n\n Press any key to s
     'center', 'center', black);
 Screen('Flip', window);
 KbStrokeWait;
-DrawFormattedText(window,' Below you will find your accuracy \n\n and your average reaction time!','center', 'center', black);
+DrawFormattedText(window, 'You have completed Level One! \n\n Press any key to see your results',...
+    'center', 'center', black);
+Screen('Flip', window);
+KbStrokeWait;
+DrawFormattedText(window, sprintf('Your average reaction time is: %d\n Press any key to see your score!', averagert),'center','center',black);
+Screen('Flip', window);
+KbStrokeWait;
+DrawFormattedText(window, sprintf('Your score was: %d\n ', accuracypercent),'center','center',black);
 Screen('Flip', window);
 KbStrokeWait;
 sca;

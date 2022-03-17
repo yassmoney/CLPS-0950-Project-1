@@ -189,10 +189,10 @@ for trial = 1:numTrials
         elseif keyCode(blueKey)
             response = 2;
             respToBeMade = false;
-        elseif keyCode(greenKey)
+        elseif keyCode(yellowKey)
             response = 3;
             respToBeMade = false;
-        elseif keyCode(yellowKey)
+        elseif keyCode(greenKey)
             response= 4;
             respToBeMade = false;
         end
@@ -209,12 +209,21 @@ for trial = 1:numTrials
     respMat(3, trial) = response;
     respMat(4, trial) = rt;
 
-end
+ if colorNum == response
+    respMat(5,trial) = 1
+ else
+     respMat(5,trial)= 0
+ end
+
+ end
 
 % Result Data
 
 averagereaction= sum(respMat(4,:))
 averagert= averagereaction/12
+
+accuracy= sum((respMat(5))== 1)
+accuracypercent= accuracy/12
 
 
 
@@ -224,8 +233,10 @@ DrawFormattedText(window, 'You have completed Level One! \n\n Press any key to s
     'center', 'center', black);
 Screen('Flip', window);
 KbStrokeWait;
-DrawFormattedText(window, sprintf('Your average reaction time is: %d\n', averagert),'center','center',black);
-
+DrawFormattedText(window, sprintf('Your average reaction time is: %d\n Press any key to see your score!', averagert),'center','center',black);
+Screen('Flip', window);
+KbStrokeWait;
+DrawFormattedText(window, sprintf('Your score was: %d\n ', accuracypercent),'center','center',black);
 Screen('Flip', window);
 KbStrokeWait;
 

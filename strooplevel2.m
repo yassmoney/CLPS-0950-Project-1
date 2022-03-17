@@ -194,6 +194,12 @@ for trial = 1:numTrials
     respMat(2, trial) = colorNum;
     respMat(3, trial) = response;
     respMat(4, trial) = rt;
+   
+    if colorNum == response
+    respMat(5,trial) = 1
+ else
+     respMat(5,trial)= 0
+    end
 
 end
 
