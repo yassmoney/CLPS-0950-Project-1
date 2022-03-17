@@ -20,7 +20,7 @@ fig = uifigure('Position', [50 50 725 400]); %slider
         [1 1 1], 'Position', [400 50 300 300]);
     img = uiimage(pnl2, 'ImageSource',given_img_r);
 
-    disp(sld.Value);
+    disp(sld.Value)
 
 n = 0;
 while n < 1
