@@ -213,6 +213,8 @@ end
 
 % Result Data
 
+averagereaction= sum(respMat(4,:))
+averagert= averagereaction/12
 
 
 
@@ -222,7 +224,8 @@ DrawFormattedText(window, 'You have completed Level One! \n\n Press any key to s
     'center', 'center', black);
 Screen('Flip', window);
 KbStrokeWait;
-DrawFormattedText(window,' Below you will find your accuracy \n\n and your average reaction time!','center', 'center', black);
+DrawFormattedText(window, sprintf('Your average reaction time is: %d\n', averagert),'center','center',black);
+
 Screen('Flip', window);
 KbStrokeWait;
 
