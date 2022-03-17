@@ -127,7 +127,7 @@ for trial = 1:numTrials
             'center', 'center', black);
         Screen('Flip', window);
         KbStrokeWait;
-        DrawFormattedText(window, 'A word will appear on your screen \n\n and will be colored either sky blue, water blue, dark blue or royal blue. \n\n If sky blue, press the S key! \n\n If water blue, press the W key! \n\n If dark blue, press the D key!, \n\n If royal blue, press the R key! \n\n Press any key to start!! \n\n  You can quit anytime by pressing ESC!','center', 'center', black);
+        DrawFormattedText(window, 'A word will appear on your screen \n\n and will be colored either sky blue, water blue, dark blue or royal blue. \n\n If pink, press the P key! \n\n If orange, press the O key! \n\n If lavender, press the L key!, \n\n If maroon, press the M key! \n\n Press any key to start!! \n\n  You can quit anytime by pressing ESC!','center', 'center', black);
         Screen('Flip', window);
         KbStrokeWait;
     end
