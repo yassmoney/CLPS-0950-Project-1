@@ -6,7 +6,7 @@ sca;
 % Setting up default values
 PsychDefaultSetup(2);
 
-% Random number generator
+% Create a random number generator
 rand('seed', sum(100 * clock));
 
 % Setting the screen number to the external secondary monitor if there is one
@@ -27,7 +27,7 @@ Screen('Flip', window);
 % Query the frame duration
 ifi = Screen('GetFlipInterval', window);
 
-% Set  text size
+% Set the text size
 Screen('TextSize', window, 70);
 
 % Query the maximum priority level
@@ -44,11 +44,11 @@ Screen('BlendFunction', window, 'GL_SRC_ALPHA', 'GL_ONE_MINUS_SRC_ALPHA');
 %                       Timing Information
 %----------------------------------------------------------------------
 
-% Stimulus interval time in seconds and frames
+% Interstimulus interval time in seconds and frames
 isiTimeSecs = 1;
 isiTimeFrames = round(isiTimeSecs / ifi);
 
-% Number of frames to wait before next stimulus
+% Number of frames to wait before re-drawing
 waitframes = 1;
 
 
@@ -77,16 +77,16 @@ rgbColors = [0.2 0.8 0; 0.2 0.7 0.1; 0.2 0.7 0.3; 0.2 0.9 0.5];
 % Make the matrix which will determine our condition combinations
 condMatrixBase = [sort(repmat([1 2 3 4], 1, 3)); repmat([1 2 3 4], 1, 3)];
 
-% This is for the number of trials per condition, giving us a total of 12 trials.
+% Number of trials per condition us a total of 12 trials.
 trialsPerCondition = 1;
 
 % Duplicate the condition matrix to get the full number of trials
 condMatrix = repmat(condMatrixBase, 1, trialsPerCondition);
 
-% Size of matrix
+% Get the size of the matrix
 [~, numTrials] = size(condMatrix);
 
-% This is here to randomize the conditions
+% Randomise the conditions
 shuffler = Shuffle(1:numTrials);
 condMatrixShuffled = condMatrix(:, shuffler);
 
@@ -95,11 +95,9 @@ condMatrixShuffled = condMatrix(:, shuffler);
 %                     Make a response matrix
 %----------------------------------------------------------------------
 
-% Four row matrix; 
-% row 1 = word presented; 
-% row 2 = color of word; 
-% row 3 = key which was pressed in response to stimulus; 
-% row 4 = response time 
+% This is a four row matrix the first row will record the word we present,
+% the second row the color the word it written in, the third row the key
+% they respond with and the final row the time they took to make there response.
 respMat = nan(4, numTrials);
 
 
@@ -107,7 +105,7 @@ respMat = nan(4, numTrials);
 %                       Experimental loop
 %----------------------------------------------------------------------
 
-% For loop for total number of trials
+% Animation loop: we loop for the total number of trials
 for trial = 1:numTrials
 
     % Word and color number
@@ -150,10 +148,19 @@ for trial = 1:numTrials
         vbl = Screen('Flip', window, vbl + (waitframes - 0.5) * ifi);
     end
 
+    % Now present the word in continuous loops until the person presses a
+    % key to respond. We take a time stamp before and after to calculate
+    % our reaction time. We could do this directly with the vbl time stamps,
+    % but for the purposes of this introductory demo we will use GetSecs.
+    %
+    % The person should be asked to respond to either the written word or
+    % the color the word is written in. They make thier response with the
+    % three arrow key. They should press "Left" for "Red", "Down" for
+    % "Green" and "Right" for "Blue".
     tStart = GetSecs;
     while respToBeMade == true
 
-        % create the word
+        % Draw the word
         DrawFormattedText(window, char(theWord), 'center', 'center', theColor);
 
         % Check the keyboard. The person should press the
@@ -173,7 +180,7 @@ for trial = 1:numTrials
             respToBeMade = false;
         end
 
-        % Change screen
+        % Flip to the screen
         vbl = Screen('Flip', window, vbl + (waitframes - 0.5) * ifi);
     end
     tEnd = GetSecs;
@@ -187,7 +194,7 @@ for trial = 1:numTrials
 
 end
 
-% Result Data; Average reaction time and accuracy of trial 
+% Result Data
 averagereaction = sum(respMat(4,:));
 averagert = averagereaction/12;
 
