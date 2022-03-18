@@ -51,29 +51,29 @@ squareXpos = [screenXpixels * 0.33 screenXpixels * 0.67];
 numSqaures = length(squareXpos);
 
 %Generate random Red and Green values
-        r_given = randi([50,220],1)/255;
-        r_given_exp = randi([50,220],1)/255;
-        g_given = randi([100,220],1)/255;
-        
-        % Set the colors to Red, Green and Blue
-        allColors = [r_given_exp g_given 0; r_given g_given 0; 0 0 1];
-        
-        % Make our rectangle coordinates
-        allRects = nan(4, 3);
-        for i = 1:numSqaures
-            allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
-        end
-        
-        % Draw the rect to the screen
-        Screen('FillRect', window, allColors, allRects);
-        
-        % Flip to the screen
-        Screen('Flip', window);
+r_given = randi([50,220],1)/255;
+r_given_exp = randi([50,220],1)/255;
+g_given = randi([100,220],1)/255;
+
+% Set the colors to Red, Green and Blue
+allColors = [r_given_exp g_given 0; r_given g_given 0; 0 0 1];
+
+% Make our rectangle coordinates
+allRects = nan(4, 3);
+for i = 1:numSqaures
+    allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
+end
+
+% Draw the rect to the screen
+Screen('FillRect', window, allColors, allRects);
+
+% Flip to the screen
+Screen('Flip', window);
 
 %Setting up loop to regenerate trials
 trialNum = 0
 while trialNum < 5
-
+    
     [keyIsDown,secs, keyCode] = KbCheck;
     %trialNum = trialNum + 1;
     if keyCode(escapeKey)
@@ -84,11 +84,26 @@ while trialNum < 5
         WaitSecs(0.2);
         %Generate random Red and Green values
         r_given = randi([50,220],1)/255;
-        r_given_exp = randi([50,220],1)/255;
+        r_given_exp = abs(r_given - randi([50,220],1)/255);
         g_given = randi([100,220],1)/255;
+        g_given_exp = abs(g_given - randi([100,220],1)/255);
         
-        % Set the colors to Red, Green and Blue
-        allColors = [r_given_exp g_given 0; r_given g_given 0; 0 0 1];
+        %Create variable to randomize the trialType
+            %trialType 1: r is changed, final squares can match
+            %trialType 2: r is changed, final squares cannot match
+            %trialType 3: g is changed, final squares can match
+            %trialType 4: g is changed, final squares cannot match
+        trialType = randi(4,1)
+        
+        if trialType == 1 %slider should only change r_given_exp
+            allColors = [r_given_exp g_given 0; r_given g_given 0; 0 0 1];
+        elseif trialType == 2 %slider should only change r_given_exp
+            allColors = [r_given_exp g_given_exp 0; r_given g_given 0; 0 0 1];
+        elseif trialType == 3 %slider should only change r_given_exp
+            allColors = [r_given g_given_exp 0; r_given g_given 0; 0 0 1];
+        elseif trialType == 4
+            allColors = [r_given_exp g_given_exp 0; r_given g_given 0; 0 0 1];
+        end 
         
         % Make our rectangle coordinates
         allRects = nan(4, 3);

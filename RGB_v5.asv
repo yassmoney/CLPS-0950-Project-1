@@ -50,32 +50,30 @@ baseRect = [0 0 200 200];
 squareXpos = [screenXpixels * 0.33 screenXpixels * 0.67];
 numSqaures = length(squareXpos);
 
+%Generate random Red and Green values
+r_given = randi([50,220],1)/255;
+r_given_exp = randi([50,220],1)/255;
+g_given = randi([100,220],1)/255;
+
+% Set the colors to Red, Green and Blue
+allColors = [r_given_exp g_given 0; r_given g_given 0; 0 0 1];
+
+% Make our rectangle coordinates
+allRects = nan(4, 3);
+for i = 1:numSqaures
+    allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
+end
+
+% Draw the rect to the screen
+Screen('FillRect', window, allColors, allRects);
+
+% Flip to the screen
+Screen('Flip', window);
+
 %Setting up loop to regenerate trials
 trialNum = 0
 while trialNum < 5
-    %Generate random Red and Green values
-    r_given = randi([50,220],1)/255;
-    r_given_exp = randi([50,220],1)/255;
-    g_given = randi([100,220],1)/255;
     
-    % Set the colors to Red, Green and Blue
-    allColors = [r_given_exp g_given 0; r_given g_given 0; 0 0 1];
-    
-    % Make our rectangle coordinates
-    allRects = nan(4, 3);
-    for i = 1:numSqaures
-        allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
-    end
-    
-    % Draw the rect to the screen
-    Screen('FillRect', window, allColors, allRects);
-    
-    % Flip to the screen
-    Screen('Flip', window);
-
-    %Wait for a key press
-    %KbStrokeWait;
-
     [keyIsDown,secs, keyCode] = KbCheck;
     %trialNum = trialNum + 1;
     if keyCode(escapeKey)
@@ -83,19 +81,39 @@ while trialNum < 5
         sca;
         return
     elseif keyCode(nextKey)
-        WaitSecs(1);
+        WaitSecs(0.2);
+        %Generate random Red and Green values
+        r_given = randi([50,220],1)/255;
+        r_given_exp = randi([50,220],1)/255;
+        g_given = randi([100,220],1)/255;
+        g_given_exp = randi([100,220],1)/255;
+        
+        %Create variable to randomize the trialType
+            %trialType 1: r is changed, final squares can match
+            %trialType 2: r is changed, final squares cannot match
+            %trialType 3: g is changed, final squares can match
+            %trialType 4: g is changed, final squares cannot match
+        trialType = randi(4,1);
+
+        % Set the colors to Red, Green and Blue
+        allColors = [r_given_exp g_given 0; r_given g_given 0; 0 0 1];
+        
+        % Make our rectangle coordinates
+        allRects = nan(4, 3);
+        for i = 1:numSqaures
+            allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
+        end
+        
+        % Draw the rect to the screen
+        Screen('FillRect', window, allColors, allRects);
+        
+        % Flip to the screen
+        Screen('Flip', window);
+
+        %Move to the next trial
         trialNum = trialNum+1;
     end
 
-elseif keyCode(escapeKey)
-        ShowCursor;
-        sca;
-        return
-    elseif keyCode(nextKey)
-        WaitSecs(1);
-        trialNum = trialNum+1;
-    end
-end
 end
 
 % Clear the screen
