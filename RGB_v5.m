@@ -31,7 +31,7 @@ nextKey = KbName('RightArrow');
 escapeKey= KbName('ESCAPE');
 
 %----------------------------------------------------------------------
-%                       Creating Rectangles
+%                       Creating the Window
 %----------------------------------------------------------------------
 
 % Open an on screen window
@@ -43,6 +43,28 @@ escapeKey= KbName('ESCAPE');
 % Get the centre coordinate of the window
 [xCenter, yCenter] = RectCenter(windowRect);
 
+%----------------------------------------------------------------------
+%                       Instruction Slide
+%----------------------------------------------------------------------
+DrawFormattedText(window, ['Welcome to the RGB Anomaloscope! \n\n ' ...
+    'Press any key to see instructions!'],...
+    'center', 'center', black);
+Screen('Flip', window);
+KbStrokeWait;
+
+DrawFormattedText(window, ['In this task, you will be given two squares. \n\n ' ...
+    'Your job is to use the slider to make the box on the left be the same \n color as the box on the right \n\n ' ...
+    'Once you have a match, press the right arrow key! \n\n ' ...
+    'If a match is not possible, click NO MATCH (TBD) \n\n ' ...
+    'Press the right arrow key TWICE to begin!'],...
+    'center', 'center', black);
+Screen('Flip', window);
+KbStrokeWait;
+
+%----------------------------------------------------------------------
+%                       Creating Rectangles
+%----------------------------------------------------------------------
+
 % Make a base Rect of 200 by 200 pixels
 baseRect = [0 0 200 200];
 
@@ -50,28 +72,8 @@ baseRect = [0 0 200 200];
 squareXpos = [screenXpixels * 0.33 screenXpixels * 0.67];
 numSqaures = length(squareXpos);
 
-%Generate random Red and Green values
-r_given = randi([50,220],1)/255;
-r_given_exp = randi([50,220],1)/255;
-g_given = randi([100,220],1)/255;
-
-% Set the colors to Red, Green and Blue
-allColors = [r_given_exp g_given 0; r_given g_given 0; 0 0 1];
-
-% Make our rectangle coordinates
-allRects = nan(4, 3);
-for i = 1:numSqaures
-    allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
-end
-
-% Draw the rect to the screen
-Screen('FillRect', window, allColors, allRects);
-
-% Flip to the screen
-Screen('Flip', window);
-
 %Setting up loop to regenerate trials
-trialNum = 0
+trialNum = 0;
 while trialNum < 5
     
     [keyIsDown,secs, keyCode] = KbCheck;

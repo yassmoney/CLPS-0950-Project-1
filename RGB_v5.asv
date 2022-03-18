@@ -31,7 +31,7 @@ nextKey = KbName('RightArrow');
 escapeKey= KbName('ESCAPE');
 
 %----------------------------------------------------------------------
-%                       Creating Rectangles
+%                       Creating the Window
 %----------------------------------------------------------------------
 
 % Open an on screen window
@@ -42,6 +42,27 @@ escapeKey= KbName('ESCAPE');
 
 % Get the centre coordinate of the window
 [xCenter, yCenter] = RectCenter(windowRect);
+
+%----------------------------------------------------------------------
+%                       Instruction Slide
+%----------------------------------------------------------------------
+DrawFormattedText(window, ['Welcome to the RGB Anomaloscope! \n\n ' ...
+    'Press any key to see instructions!'],...
+    'center', 'center', black);
+Screen('Flip', window);
+KbStrokeWait;
+
+DrawFormattedText(window, ['In this task, you will be given two squares. \n\n ' ...
+    'Your job is to use the slider to make the box on the left be the same \n color as the box on the right \n\n ' ...
+    'Once you have a match, press the right arrow key! \n\n ' ...
+    'If a match is not possible, click NO MATCH (TBD)'],...
+    'center', 'center', black);
+Screen('Flip', window);
+KbStrokeWait;
+
+%----------------------------------------------------------------------
+%                       Creating Rectangles
+%----------------------------------------------------------------------
 
 % Make a base Rect of 200 by 200 pixels
 baseRect = [0 0 200 200];
@@ -84,19 +105,26 @@ while trialNum < 5
         WaitSecs(0.2);
         %Generate random Red and Green values
         r_given = randi([50,220],1)/255;
-        r_given_exp = randi([50,220],1)/255;
+        r_given_exp = abs(r_given - randi([50,220],1)/255);
         g_given = randi([100,220],1)/255;
-        g_given_exp = randi([100,220],1)/255;
+        g_given_exp = abs(g_given - randi([100,220],1)/255);
         
         %Create variable to randomize the trialType
             %trialType 1: r is changed, final squares can match
             %trialType 2: r is changed, final squares cannot match
             %trialType 3: g is changed, final squares can match
             %trialType 4: g is changed, final squares cannot match
-        trialType = randi(4,1);
-
-        % Set the colors to Red, Green and Blue
-        allColors = [r_given_exp g_given 0; r_given g_given 0; 0 0 1];
+        trialType = randi(4,1)
+        
+        if trialType == 1 %slider should only change r_given_exp
+            allColors = [r_given_exp g_given 0; r_given g_given 0; 0 0 1];
+        elseif trialType == 2 %slider should only change r_given_exp
+            allColors = [r_given_exp g_given_exp 0; r_given g_given 0; 0 0 1];
+        elseif trialType == 3 %slider should only change r_given_exp
+            allColors = [r_given g_given_exp 0; r_given g_given 0; 0 0 1];
+        elseif trialType == 4
+            allColors = [r_given_exp g_given_exp 0; r_given g_given 0; 0 0 1];
+        end 
         
         % Make our rectangle coordinates
         allRects = nan(4, 3);
