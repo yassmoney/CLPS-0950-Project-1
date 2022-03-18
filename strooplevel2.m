@@ -19,16 +19,15 @@ grey = white / .5; % making a lighter background
 black = BlackIndex(screenNumber);
 
 % Open the screen
-[window, windowRect] = PsychImaging('OpenWindow', screenNumber, grey, [], 32, 2);
-
+[window, windowRect] = PsychImaging('OpenWindow', 0, [255 255 255], [0 0 1000 1000], screenNumber, grey, [], 32, 2);
 % Flip to clear
 Screen('Flip', window);
 
-% Query the frame duration
+% Query the frame duration   
 ifi = Screen('GetFlipInterval', window);
 
 % Set the text size
-Screen('TextSize', window, 70);
+Screen('TextSize', window, 40);
 
 % Query the maximum priority level
 topPriorityLevel = MaxPriority(window);

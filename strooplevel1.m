@@ -41,15 +41,15 @@ Screen('Flip', window);
 ifi = Screen('GetFlipInterval', window);
 
 % Set the text size
-Screen('TextSize', window, 70);
+Screen('TextSize', window, 40);
 
 % Query the maximum priority level
 topPriorityLevel = MaxPriority(window);
 
-% Get the centre coordinate of the window
+% Get the center coordinate of the window
 [xCenter, yCenter] = RectCenter(windowRect);
 
-% Set the blend funciton for the screen
+% Set the blend function for the screen
 Screen('BlendFunction', window, 'GL_SRC_ALPHA', 'GL_ONE_MINUS_SRC_ALPHA');
 
 
@@ -165,13 +165,9 @@ for trial = 1:numTrials
 
     % Now present the word in continuous loops until the person presses a
     % key to respond. We take a time stamp before and after to calculate
-    % our reaction time. We could do this directly with the vbl time stamps,
-    % but for the purposes of this introductory demo we will use GetSecs.
+    % our reaction time.
     %
-    % The person should be asked to respond to either the written word or
-    % the color the word is written in. They make thier response with the
-    % three arrow key. They should press "Left" for "Red", "Down" for
-    % "Green" and "Right" for "Blue".
+    
     tStart = GetSecs;
     while respToBeMade == true
 
@@ -188,13 +184,13 @@ for trial = 1:numTrials
             response = 1;
             respToBeMade = false;
         elseif keyCode(blueKey)
-            response = 2;
-            respToBeMade = false;
-        elseif keyCode(yellowKey)
             response = 3;
             respToBeMade = false;
+        elseif keyCode(yellowKey)
+            response = 4;
+            respToBeMade = false;
         elseif keyCode(greenKey)
-            response= 4;
+            response= 2;
             respToBeMade = false;
         end
 
@@ -222,10 +218,11 @@ for trial = 1:numTrials
 
 averagereaction= sum(respMat(4,:))
 averagert= averagereaction/12
+ 
+accuracy= sum((respMat(5,:)))
+accuracypercent= (accuracy/12)*100
 
-accuracy= sum((respMat(5))== 1)
-accuracypercent= accuracy/12
-
+ 
 
 
 % End of experiment screen. We clear the screen once they have made their
@@ -240,9 +237,7 @@ KbStrokeWait;
 DrawFormattedText(window, sprintf('Your score was: %d\n ', accuracypercent),'center','center',black);
 Screen('Flip', window);
 KbStrokeWait;
-
-% Clearing the workspace before start of level
-close all;
-clear;
 sca;
+
+
 

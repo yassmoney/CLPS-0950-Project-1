@@ -19,7 +19,7 @@ grey = white / .5; % making a lighter background
 black = BlackIndex(screenNumber);
 
 % Open the screen
-[window, windowRect] = PsychImaging('OpenWindow', screenNumber, grey, [], 32, 2);
+[window, windowRect] = PsychImaging('OpenWindow', 0, [255 255 255], [0 0 1000 1000], screenNumber, grey, [], 32, 2);
 
 % Flip to clear
 Screen('Flip', window);
@@ -28,7 +28,7 @@ Screen('Flip', window);
 ifi = Screen('GetFlipInterval', window);
 
 % Set  text size
-Screen('TextSize', window, 70);
+Screen('TextSize', window, 40);
 
 % Query the maximum priority level
 topPriorityLevel = MaxPriority(window);
@@ -162,14 +162,17 @@ for trial = 1:numTrials
             ShowCursor;
             sca;
             return
-        elseif keyCode(leftKey)
+        elseif keyCode(grassgreenKey)
             response = 1;
             respToBeMade = false;
-        elseif keyCode(downKey)
+        elseif keyCode(verdantgreenKey)
             response = 2;
             respToBeMade = false;
-        elseif keyCode(rightKey)
+        elseif keyCode(christmasgreenKey)
             response = 3;
+            respToBeMade = false
+        elseif keyCode(ferngreenKey)
+            response = 4;
             respToBeMade = false;
         end
 
