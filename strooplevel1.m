@@ -144,6 +144,36 @@ for trial = 1:numTrials
         DrawFormattedText(window, 'A word will appear on your screen \n\n and will be colored either red, yellow, green or blue.\n\n If green, press the g key! \n\n If red, press the r key! \n\n If yellow, press the y key!, \n\n If blue, press the b key! \n\n Press any key to start!! \n\n  You can quit anytime by pressing ESC!','center', 'center', black)
         Screen('Flip', window);
         KbStrokeWait;
+ % Get the size of the on screen window
+[screenXpixels, screenYpixels] = Screen('WindowSize', window);
+
+% Get the centre coordinate of the window
+[xCenter, yCenter] = RectCenter(windowRect);
+
+% Make a base Rect of 200 by 200 pixels
+baseRect = [0 0 200 200];
+
+% Screen X positions of our three rectangles
+squareXpos = [screenXpixels * 0.25 screenXpixels * 0.5 screenXpixels * 0.75];
+numSqaures = length(squareXpos);
+
+% Set the colors to Red, Green and Blue
+allColors = [1 0 0; 0 1 0; 0 0 1];
+
+% Make our rectangle coordinates
+allRects = nan(4, 3);
+for i = 1:numSqaures
+    allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
+end
+
+% Draw the rect to the screen
+Screen('FillRect', window, allColors, allRects);
+
+% Flip to the screen
+Screen('Flip', window);
+
+% Wait for a key press
+KbStrokeWait;
     end
 
     % Flip again to sync us to the vertical retrace at the same time as
@@ -151,7 +181,7 @@ for trial = 1:numTrials
     Screen('DrawDots', window, [xCenter; yCenter], 10, black, [], 2);
     vbl = Screen('Flip', window);
 
-    % Now we present the isi interval with fixation point minus one frame
+    % Now we present the interval with fixation point minus one frame
     % because we presented the fixation point once already when getting a
     % time stamp
     for frame = 1:isiTimeFrames - 1
