@@ -149,7 +149,7 @@ while trialNum < 5
         % Flip to the screen
         Screen('Flip', window);
 
-        while KbCheck == 0;
+        while KbCheck == 0
             allColors = [r_given_exp g_given 0; r_given g_given 0; 0 0 1];
             % Draw the rect to the screen
             Screen('FillRect', window, allColors, allRects);
