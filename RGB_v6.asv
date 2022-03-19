@@ -88,9 +88,33 @@ Priority(topPriorityLevel);
         % Draw the rect to the screen
         Screen('FillRect', window, allColors, allRects);
        
+[mx, my, buttons] = GetMouse(window);
+
+    % Find the central position of the square
+    [cx, cy] = RectCenter(centeredRect);
+
+    % See if the mouse cursor is inside the square
+    inside = IsInRect(mx, my, centeredRect);
+
+    % If the mouse cursor is inside the square and a mouse button is being
+    % pressed and the offset has not been set, set the offset and signal
+    % that it has been set
+    if inside == 1 && offsetSet == 0
+        dx = mx - cx;
+        dy = my - cy;
+        offsetSet = 1;
+    end
+
+    % If we are clicking on the square allow its position to be modified by
+    % moving the mouse, correcting for the offset between the centre of the
+    % square and the mouse position
+    if inside == 1
+        sx = mx - dx;
+    end
+    disp(sx);
+
 % Flip to the screen
         Screen('Flip', window);
-
 %Setting up loop to regenerate trials
 trialNum = 0
 while trialNum < 5
@@ -115,23 +139,10 @@ while trialNum < 5
     % If we are clicking on the square allow its position to be modified by
     % moving the mouse, correcting for the offset between the centre of the
     % square and the mouse position
-
-   if inside == 1 
+    if inside == 1 
         sx = mx - dx;
-        corrected_sx = sx/4;
-   end
-
-   for corrected_sx = 1:255
-       r_given_exp = corrected_sx
-   end
-   disp(r_given_exp);
- 
-
-
-
-           % Flip to the screen
-    vbl  = Screen('Flip', window, vbl + (waitframes - 0.5) * ifi);
-        
+    end
+    disp(sx);
 
     % Center the rectangle on its new screen position
     centeredRect = CenterRectOnPointd(baseRect2, sx, sy);
@@ -142,12 +153,12 @@ while trialNum < 5
     % Draw a white dot where the mouse cursor is
     Screen('DrawDots', window, [mx my], 10, white, [], 2);
 
+
     % Check to see if the mouse button has been released and if so reset
     % the offset cue
     if sum(buttons) <= 0
         offsetSet = 0;
     end
-    
     [keyIsDown, secs, keyCode] = KbCheck;
     %trialNum = trialNum + 1;
     if keyCode(escapeKey)
@@ -169,11 +180,9 @@ while trialNum < 5
         for i = 1:numSqaures
             allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
         end
-
-  
+        
         % Draw the rect to the screen
         Screen('FillRect', window, allColors, allRects);
-
 
         %Move to the next trial
         trialNum = trialNum+1;
