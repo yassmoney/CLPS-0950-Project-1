@@ -144,7 +144,11 @@ for trial = 1:numTrials
         DrawFormattedText(window, 'A word will appear on your screen \n\n and will be colored either red, yellow, green or blue.\n\n If green, press the g key! \n\n If red, press the r key! \n\n If yellow, press the y key!, \n\n If blue, press the b key! \n\n Press any key to start!! \n\n  You can quit anytime by pressing ESC!','center', 'center', black)
         Screen('Flip', window);
         KbStrokeWait;
- % Get the size of the on screen window
+%----------------------------------------------------------------------
+%                     Setting Colors for Participants 
+%----------------------------------------------------------------------
+        
+        % Get the size of the on screen window
 [screenXpixels, screenYpixels] = Screen('WindowSize', window);
 
 % Get the centre coordinate of the window
@@ -158,7 +162,7 @@ squareXpos = [screenXpixels * 0.25 screenXpixels * 0.5 screenXpixels * 0.75];
 numSqaures = length(squareXpos);
 
 % Set the colors to Red, Green and Blue
-allColors = [1 0 0; 0 1 0; 0 0 1];
+allColors = [1 0 0; 0 1 0; 0 0 1; 1 1 0];
 
 % Make our rectangle coordinates
 allRects = nan(4, 3);
@@ -175,7 +179,7 @@ Screen('Flip', window);
 % Wait for a key press
 KbStrokeWait;
     end
-
+%----------------------------------------------------------------------
     % Flip again to sync us to the vertical retrace at the same time as
     % drawing our fixation point
     Screen('DrawDots', window, [xCenter; yCenter], 10, black, [], 2);
