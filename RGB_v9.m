@@ -128,7 +128,7 @@ while trialNum < 5
             %trialType 2: r is changed, final squares cannot match
             %trialType 3: g is changed, final squares can match
             %trialType 4: g is changed, final squares cannot match
-        trialType = 1 %randi(4,1)
+        trialType = 1; %randi(4,1)
         
         % Make our rectangle coordinates
         allRects = nan(4, 3);
@@ -387,11 +387,11 @@ while trialNum < 5
             end 
         end 
 
-        RGBscore = scoreTally/(trialNum - 1);
-
         %Move to the next trial
         trialNum = trialNum+1;
     end
+
+    RGBscore = scoreTally/(trialNum - 1);
 
 end
 
