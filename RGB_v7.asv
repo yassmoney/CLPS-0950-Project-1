@@ -30,6 +30,7 @@ black = BlackIndex(screenNumber);
 nextKey = KbName('RightArrow');
 escapeKey= KbName('ESCAPE');
 enterKey = KbName('ENTER')
+nKey = KbName('n')
 
 %----------------------------------------------------------------------
 %                       Creating the Window
@@ -59,7 +60,7 @@ KbStrokeWait;
 DrawFormattedText(window, ['In this task, you will be given two squares. \n\n ' ...
     'Your job is to use the slider to make the box on the left be the same \n color as the box on the right \n\n ' ...
     'Once you have a match, press the right arrow key! \n\n ' ...
-    'If a match is not possible, click NO MATCH (TBD) \n\n ' ...
+    'If a match is not possible, press the N key \n\n ' ...
     'Press the right arrow key TWICE to begin!'],...
     'center', 'center', black);
 Screen('Flip', window);
@@ -112,11 +113,8 @@ while trialNum < 5
         ShowCursor;
         sca;
         return
-    elseif keyCode(enterKey)
+    elseif keyCode(nextKey)
         WaitSecs(0.2);
-
-
-        
         %Generate random Red and Green values
         r_given = randi([50,220],1)/255;
         r_given_exp = abs(r_given - randi([50,220],1)/255);
@@ -130,30 +128,31 @@ while trialNum < 5
             %trialType 4: g is changed, final squares cannot match
         trialType = randi(4,1)
         
-        if trialType == 1 %slider should only change r_given_exp
-            allColors = [r_given_exp g_given 0; r_given g_given 0; 0 0 1];
-        elseif trialType == 2 %slider should only change r_given_exp
-            allColors = [r_given_exp g_given_exp 0; r_given g_given 0; 0 0 1];
-        elseif trialType == 3 %slider should only change r_given_exp
-            allColors = [r_given g_given_exp 0; r_given g_given 0; 0 0 1];
-        elseif trialType == 4
-            allColors = [r_given_exp g_given_exp 0; r_given g_given 0; 0 0 1];
-        end 
+        %%%ONCE WE ARE READY, COPY/PASTE THE FOLLOWING CODE INTO THE while
+        %%%KbCheck == 0 LOOP
+%         if trialType == 1 %slider should only change r_given_exp
+%             allColors = [r_given_exp g_given 0; r_given g_given 0; 0 0 1];
+%         elseif trialType == 2 %slider should only change r_given_exp
+%             allColors = [r_given_exp g_given_exp 0; r_given g_given 0; 0 0 1];
+%         elseif trialType == 3 %slider should only change r_given_exp
+%             allColors = [r_given g_given_exp 0; r_given g_given 0; 0 0 1];
+%         elseif trialType == 4
+%             allColors = [r_given_exp g_given_exp 0; r_given g_given 0; 0 0 1];
+%         end 
         
         % Make our rectangle coordinates
         allRects = nan(4, 3);
         for i = 1:numSqaures
             allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
         end
-        
-        % Draw the rect to the screen
-        Screen('FillRect', window, allColors, allRects);
 
         % Flip to the screen
         Screen('Flip', window);
 
-        mouseDummy = 0;
-        while mouseDummy == 0;
+        while KbCheck == 0;
+            allColors = [r_given_exp g_given 0; r_given g_given 0; 0 0 1];
+            % Draw the rect to the screen
+            Screen('FillRect', window, allColors, allRects);
             % Get the current position of the mouse
             [mx, my, buttons] = GetMouse(window);
         
@@ -181,9 +180,11 @@ while trialNum < 5
                 corrected_sx = sx/4;
            end
         
-           for corrected_sx = 1:255
-               r_given_exp = corrected_sx
-           end
+%            for corrected_sx = 1:255
+%                r_given_exp = corrected_sx
+%            end
+           r_given_exp = corrected_sx/256
+
            disp(r_given_exp);
            % Flip to the screen
            %vbl  = Screen('Flip', window, vbl + (waitframes - 0.5) * ifi);
@@ -206,11 +207,6 @@ while trialNum < 5
 
             %Flip to the screen
             Screen('Flip', window);
-            
-            [keyIsDown,secs, keyCode] = KbCheck;
-            if keyCode(enterKey)
-                mouseDummy = 1;
-            end 
 
         end
 

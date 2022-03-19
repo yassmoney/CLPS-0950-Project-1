@@ -128,15 +128,17 @@ while trialNum < 5
             %trialType 4: g is changed, final squares cannot match
         trialType = randi(4,1)
         
-        if trialType == 1 %slider should only change r_given_exp
-            allColors = [r_given_exp g_given 0; r_given g_given 0; 0 0 1];
-        elseif trialType == 2 %slider should only change r_given_exp
-            allColors = [r_given_exp g_given_exp 0; r_given g_given 0; 0 0 1];
-        elseif trialType == 3 %slider should only change r_given_exp
-            allColors = [r_given g_given_exp 0; r_given g_given 0; 0 0 1];
-        elseif trialType == 4
-            allColors = [r_given_exp g_given_exp 0; r_given g_given 0; 0 0 1];
-        end 
+        %%%ONCE WE ARE READY, COPY/PASTE THE FOLLOWING CODE INTO THE while
+        %%%KbCheck == 0 LOOP
+%         if trialType == 1 %slider should only change r_given_exp
+%             allColors = [r_given_exp g_given 0; r_given g_given 0; 0 0 1];
+%         elseif trialType == 2 %slider should only change r_given_exp
+%             allColors = [r_given_exp g_given_exp 0; r_given g_given 0; 0 0 1];
+%         elseif trialType == 3 %slider should only change r_given_exp
+%             allColors = [r_given g_given_exp 0; r_given g_given 0; 0 0 1];
+%         elseif trialType == 4
+%             allColors = [r_given_exp g_given_exp 0; r_given g_given 0; 0 0 1];
+%         end 
         
         % Make our rectangle coordinates
         allRects = nan(4, 3);
@@ -148,6 +150,7 @@ while trialNum < 5
         Screen('Flip', window);
 
         while KbCheck == 0;
+            allColors = [r_given_exp g_given 0; r_given g_given 0; 0 0 1];
             % Draw the rect to the screen
             Screen('FillRect', window, allColors, allRects);
             % Get the current position of the mouse
@@ -177,13 +180,9 @@ while trialNum < 5
                 corrected_sx = sx/4;
            end
         
-           for corrected_sx = 1:255
-               r_given_exp = corrected_sx
-           end
+           r_given_exp = corrected_sx/255
+
            disp(r_given_exp);
-           % Flip to the screen
-           %vbl  = Screen('Flip', window, vbl + (waitframes - 0.5) * ifi);
-                
         
             % Center the rectangle on its new screen position
             centeredRect = CenterRectOnPointd(baseRect2, sx, sy);
