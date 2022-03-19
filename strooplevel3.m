@@ -199,9 +199,11 @@ for trial = 1:numTrials
 end
 
 % Result Data
-averagereaction = sum(respMat(4,:));
-averagert = averagereaction/12;
-
+averagereaction= sum(respMat(4,:))
+averagert= averagereaction/12
+ 
+accuracy= sum((respMat(5,:)))
+accuracypercent= (accuracy/12)*100
 
 % End of experiment screen. We clear the screen once they have made their
 % response
