@@ -30,6 +30,7 @@ black = BlackIndex(screenNumber);
 nextKey = KbName('RightArrow');
 escapeKey= KbName('ESCAPE');
 enterKey = KbName('ENTER')
+nKey = KbName('n')
 
 %----------------------------------------------------------------------
 %                       Creating the Window
@@ -59,7 +60,7 @@ KbStrokeWait;
 DrawFormattedText(window, ['In this task, you will be given two squares. \n\n ' ...
     'Your job is to use the slider to make the box on the left be the same \n color as the box on the right \n\n ' ...
     'Once you have a match, press the right arrow key! \n\n ' ...
-    'If a match is not possible, click NO MATCH (TBD) \n\n ' ...
+    'If a match is not possible, press the N key \n\n ' ...
     'Press the right arrow key TWICE to begin!'],...
     'center', 'center', black);
 Screen('Flip', window);
@@ -142,15 +143,13 @@ while trialNum < 5
         for i = 1:numSqaures
             allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
         end
-        
-        % Draw the rect to the screen
-        Screen('FillRect', window, allColors, allRects);
 
         % Flip to the screen
         Screen('Flip', window);
 
-        mouseDummy = 0;
-        while mouseDummy == 0;
+        while KbCheck == 0;
+            % Draw the rect to the screen
+            Screen('FillRect', window, allColors, allRects);
             % Get the current position of the mouse
             [mx, my, buttons] = GetMouse(window);
         
@@ -203,11 +202,6 @@ while trialNum < 5
 
             %Flip to the screen
             Screen('Flip', window);
-            
-            [keyIsDown,secs, keyCode] = KbCheck;
-            if keyCode(enterKey)
-                mouseDummy = 1;
-            end 
 
         end
 
