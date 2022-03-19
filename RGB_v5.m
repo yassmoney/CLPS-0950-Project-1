@@ -67,6 +67,7 @@ KbStrokeWait;
 
 % Make a base Rect of 200 by 200 pixels
 baseRect = [0 0 200 200];
+baseRect2 = [0 0 50 50];
 
 % Screen X positions of our three rectangles
 squareXpos = [screenXpixels * 0.33 screenXpixels * 0.67];
