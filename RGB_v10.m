@@ -46,7 +46,7 @@ nKey = KbName('n')
 [xCenter, yCenter] = RectCenter(windowRect);
 
 % Query the frame duration
-ifi = Screen('GetFlipInterval', window);
+% ifi = Screen('GetFlipInterval', window);
 
 %----------------------------------------------------------------------
 %                       Instruction Slide
@@ -107,7 +107,7 @@ Priority(topPriorityLevel);
 trialNum = 0;
 scoreTally = 0;
 
-while trialNum < 15
+while trialNum < 5
     [keyIsDown,secs, keyCode] = KbCheck;
     %trialNum = trialNum + 1;
     if keyCode(escapeKey)
@@ -140,7 +140,6 @@ while trialNum < 15
         Screen('Flip', window);
 
         while KbCheck == 0
-            trialType
             if trialType == 1 %slider should only change r_given_exp
                 allColors = [r_given_exp r_given 0; g_given g_given 0; 0 0 1];
                 % Draw the rect to the screen
@@ -167,26 +166,26 @@ while trialNum < 15
                 % moving the mouse, correcting for the offset between the centre of the
                 % square and the mouse position
             
-               if inside == 1 
-                sx = mx - dx;
-                corrected_sx = 255*((sx-255)/(750-255));
-           end
+                if inside == 1 
+                    sx = mx - dx;
+                    corrected_sx = 255*((sx-255)/(750-255));
+                end
 
-
-if sx < 255
-        sx = 255;
-        
-end 
-
-if sx > 750
-    sx = 750;
-end
+                if sx < 255
+                    sx = 255;
+                        
+                end 
+                
+                if sx > 750
+                    sx = 750;
+                end
             
                 r_given_exp = corrected_sx/255;
     
                 disp(r_given_exp);
 
-             Screen('DrawLine', window, [0], 250, 660, 750, 660);
+                % Draw a line behind the red rectangle to simulate a slider
+                Screen('DrawLine', window, [0], 250, 660, 750, 660);
             
                 % Center the rectangle on its new screen position
                 centeredRect = CenterRectOnPointd(baseRect2, sx, sy);
@@ -233,24 +232,26 @@ end
                 % moving the mouse, correcting for the offset between the centre of the
                 % square and the mouse position
             
-                   if inside == 1 
-                sx = mx - dx;
-                corrected_sx = 255*((sx-255)/(750-255));
-           end
+                if inside == 1 
+                    sx = mx - dx;
+                    corrected_sx = 255*((sx-255)/(750-255));
+                end
 
-
-if sx < 255
-        sx = 255;
-        
-end 
-
-if sx > 750
-    sx = 750;
-end
+                if sx < 255
+                        sx = 255;
+                        
+                end 
+                
+                if sx > 750
+                    sx = 750;
+                end
            
                 r_given_exp = corrected_sx/255;
     
                 disp(r_given_exp);
+
+                % Draw a line behind the red rectangle to simulate a slider
+                Screen('DrawLine', window, [0], 250, 660, 750, 660);
             
                 % Center the rectangle on its new screen position
                 centeredRect = CenterRectOnPointd(baseRect2, sx, sy);
@@ -298,24 +299,26 @@ end
                 % square and the mouse position
             
                  if inside == 1 
-                sx = mx - dx;
-                corrected_sx = 255*((sx-255)/(750-255));
-           end
+                    sx = mx - dx;
+                    corrected_sx = 255*((sx-255)/(750-255));
+                 end
 
 
-if sx < 255
-        sx = 255;
-        
-end 
-
-if sx > 750
-    sx = 750;
-end
+                if sx < 255
+                        sx = 255;
+                        
+                end 
+                
+                if sx > 750
+                    sx = 750;
+                end
            
-            
                 g_given_exp = corrected_sx/255;
     
                 disp(g_given_exp);
+
+                % Draw a line behind the red rectangle to simulate a slider
+                Screen('DrawLine', window, [0], 250, 660, 750, 660);
             
                 % Center the rectangle on its new screen position
                 centeredRect = CenterRectOnPointd(baseRect2, sx, sy);
@@ -363,24 +366,27 @@ end
                 % square and the mouse position
             
                 if inside == 1 
-                sx = mx - dx;
-                corrected_sx = 255*((sx-255)/(750-255));
-           end
+                    sx = mx - dx;
+                    corrected_sx = 255*((sx-255)/(750-255));
+                end
 
 
-if sx < 255
-        sx = 255;
-        
-end 
-
-if sx > 750
-    sx = 750;
-end
+                if sx < 255
+                        sx = 255;
+                        
+                end 
+                
+                if sx > 750
+                    sx = 750;
+                end
            
             
                 g_given_exp = corrected_sx/255;
     
                 disp(g_given_exp);
+
+                % Draw a line behind the red rectangle to simulate a slider
+                Screen('DrawLine', window, [0], 250, 660, 750, 660);
             
                 % Center the rectangle on its new screen position
                 centeredRect = CenterRectOnPointd(baseRect2, sx, sy);
@@ -418,13 +424,13 @@ end
             if trialType == 2 || trialType == 4
                 scoreTally = 0;
             elseif trialType == 1 
-                if abs(r_given - r_given_exp) <= 0.13
+                if abs(r_given - r_given_exp) <= 0.15
                     scoreTally = scoreTally + 1;
                 else
                     scoreTally = scoreTally + 0;
                 end 
             elseif trialType == 3
-                if abs(g_given - g_given_exp) <= 1; 
+                if abs(g_given - g_given_exp) <= 0.15
                     scoreTally = scoreTally + 1;
                 else 
                     scoreTally = scoreTally + 0;
@@ -439,6 +445,14 @@ end
     end
 
 end
+
+scoreDisp = num2str(RGBscore*100);
+WaitSecs(0.2);
+DrawFormattedText(window, [strcat('Your score is: ','  ', scoreDisp, '%. \n\n Press any key to continue.')],...
+    'center', 'center', black);
+Screen('Flip', window);
+
+KbStrokeWait;
 
 % Clear the screen
 sca;
