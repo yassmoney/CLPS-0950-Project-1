@@ -128,6 +128,60 @@ for trial = 1:numTrials
         DrawFormattedText(window, 'A word will appear on your screen \n\n and will be colored either pink, orange, lavender or maroon. \n\n If pink, press the P key! \n\n If orange, press the O key! \n\n If lavender, press the L key!, \n\n If maroon, press the M key! \n\n Press any key to start!! \n\n  You can quit anytime by pressing ESC!','center', 'center', black);
         Screen('Flip', window);
         KbStrokeWait;
+
+        % Get the size of the on screen window
+[screenXpixels, screenYpixels] = Screen('WindowSize', window);
+
+% Get the centre coordinate of the window
+[xCenter, yCenter] = RectCenter(windowRect);
+
+% Make a base Rect of 200 by 200 pixels
+baseRect = [0 0 150 150];
+
+% Screen X positions of our four rectangles
+squareXpos = [screenXpixels * 0.2 screenXpixels * 0.4 screenXpixels*.6];
+numSquares = length(squareXpos);
+
+% Set the colors to Pink, Lavender, Maroon, and Orange
+allColors1 = [.9 .9 1 .5 ; .6 .6 .6 0;  .7 1 0 .1 ]
+
+% Make our rectangle coordinates
+allRects = nan(4, 4);
+for i = 1:numSquares
+    allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
+end
+
+% Draw the rect to the screen
+Screen('FillRect', window, allColors1, allRects);
+
+% Make a base Rect of 200 by 200 pixels
+baseRect = [0 0 150 150];
+
+% Screen X positions of our four rectangles
+squareXpos = [screenXpixels * 0.8 screenXpixels * 0.6 screenXpixels*.4];
+numSquares = length(squareXpos);
+
+% Set the colors to Red, Green and Blue
+allColors = [ .5 .9 1 .5 ; 0 .6 .6 0;  .1 1 0 .1  ]
+
+% Make our rectangle coordinates
+allRects = nan(4, 4);
+for i = 1:numSquares
+    allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
+end
+
+% Draw the rect to the screen
+Screen('FillRect', window, allColors, allRects);
+DrawFormattedText(window,'Pink          Orange      Lavender     Maroon  ',150,400)
+
+% Flip to the screen
+Screen('Flip', window);
+
+% Wait for a key press
+KbStrokeWait;
+
+
+
     end
 
     % Flip again to sync us to the vertical retrace at the same time as
@@ -172,10 +226,10 @@ for trial = 1:numTrials
             response = 1;
             respToBeMade = false;
         elseif keyCode(maroonKey)
-            response = 2;
+            response = 4;
             respToBeMade = false;
         elseif keyCode(orangeKey)
-            response = 3;
+            response = 2;
             respToBeMade = false;
         elseif keyCode(lavenderKey)
             response = 3;
@@ -217,7 +271,10 @@ DrawFormattedText(window, 'You have completed Level Two! \n\n Press any key to s
     'center', 'center', black);
 Screen('Flip', window);
 KbStrokeWait;
-DrawFormattedText(window,' Below you will find your accuracy \n\n and your average reaction time!','center', 'center', black);
+DrawFormattedText(window, sprintf('Your average reaction time is: %d\n Press any key to see your score!', averagert),'center','center',black);
+Screen('Flip', window);
+KbStrokeWait;
+DrawFormattedText(window, sprintf('Your score was: %d\n ', accuracypercent),'center','center',black);
 Screen('Flip', window);
 KbStrokeWait;
 sca;

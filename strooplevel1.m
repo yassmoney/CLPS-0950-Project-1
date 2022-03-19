@@ -185,8 +185,10 @@ for i = 1:numSquares
     allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
 end
 
+
 % Draw the rect to the screen
 Screen('FillRect', window, allColors, allRects);
+DrawFormattedText(window,'Red           Yellow          Blue         Green',150,400)
 
 % Flip to the screen
 Screen('Flip', window);
