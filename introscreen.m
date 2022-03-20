@@ -14,7 +14,23 @@ figure
 imshow(RGB)
 
 
-%% Exit Page %%
+%% Merging Content %%
+
+KbStrokeWait;
+
+run("RGB_v10.m")
+
+if RGBscore <=.25
+    run("strooplevel1.m")
+elseif RGBscore <=.5
+    run("strooplevel2.m")
+elseif RGBscore <=.75
+    run("strooplevel3.m")
+else 
+    run('strooplevel4.m')
+
+
+
 
 
 
