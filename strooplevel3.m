@@ -167,7 +167,7 @@ squareXpos = [screenXpixels * 0.8 screenXpixels * 0.6 screenXpixels*.4];
 numSquares = length(squareXpos);
 
 % Set the colors to SKY BLUE, WATER BLUE, DARK BLUE, ROYAL BLUE 
-allColors = [ .1 .2 .3 .2 ; .1 .1 .8 .6;  .8 .4 .6 1 ]
+allColors = [ .1 .2 .3 .2 ; .1 .1 .8 .6;  .8 .4 .9 1 ]
 
 % Make our rectangle coordinates
 allRects = nan(4, 4);
@@ -177,7 +177,7 @@ end
 
 % Draw the rect to the screen
 Screen('FillRect', window, allColors, allRects);
-DrawFormattedText(window,'SKY BLUE          WATER BLUE      DARK BLUE     ROYAL BLUE  ',150,400)
+DrawFormattedText(window,'Sky Blue      Water Blue      Dark Blue     Royal Blue',150,400)
 
 % Flip to the screen
 Screen('Flip', window);
