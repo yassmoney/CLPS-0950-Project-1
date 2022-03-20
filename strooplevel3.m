@@ -274,7 +274,7 @@ KbStrokeWait;
 DrawFormattedText(window, sprintf('Your average reaction time is: %d seconds \n Press any key to see your score!', averagert),'center','center',black);
 Screen('Flip', window);
 KbStrokeWait;
-DrawFormattedText(window, sprintf('Your score was: %d percent! \n ', accuracypercent),'center','center',black);
+DrawFormattedText(window, sprintf('Your score was: %d percent! \n BRACE YOURSELF for Level 4!!!!!! Press any key for impact to begin :) ', accuracypercent),'center','center',black);
 Screen('Flip', window);
 KbStrokeWait;
 sca;
