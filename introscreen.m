@@ -8,19 +8,19 @@ position = [300 800];
 box_color = {'yellow'};
 text_str= ' This is the Stroop Groop :)'
 
-RGB = insertText(pic,position,text_str,'FontSize',50,'BoxColor',...
+Stroop = insertText(pic,position,text_str,'FontSize',50,'BoxColor',...
     box_color,'BoxOpacity',.9,'TextColor','red');
 figure
-imshow(RGB)
+imshow(Stroop)
 
 
 %% Merging Content %%
 
 KbStrokeWait;
 
-run("RGB_v10.m")
+run("RGB_v11.m")
 
-if RGBscore <=.25
+if RGBscore <= .25
     run("strooplevel1.m")
 elseif RGBscore <=.5
     run("strooplevel2.m")
@@ -28,9 +28,9 @@ elseif RGBscore <=.75
     run("strooplevel3.m")
 else 
     run('strooplevel4.m')
+end
 
-
-
+run("Exitscreen.m")
 
 
 
