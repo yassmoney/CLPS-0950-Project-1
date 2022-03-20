@@ -128,7 +128,7 @@ while trialNum < 5
             %trialType 2: r is changed, final squaresn cannot match
             %trialType 3: g is changed, final squares can match
             %trialType 4: g is changed, final squares cannot match
-        trialType = randi(4,1);
+        trialType = 3
         
         % Make our rectangle coordinates
         allRects = nan(4, 3);
@@ -140,7 +140,6 @@ while trialNum < 5
         Screen('Flip', window);
 
         while KbCheck == 0
-            trialType = 1
             if trialType == 1 %slider should only change r_given_exp
                 allColors = [r_given_exp r_given 0; g_given g_given 0; 0 0 1];
                 % Draw the rect to the screen
@@ -167,6 +166,7 @@ while trialNum < 5
                 % moving the mouse, correcting for the offset between the centre of the
                 % square and the mouse position
             
+               
                  if mx < 255
                         mx = 255;
                         
@@ -179,9 +179,9 @@ while trialNum < 5
                 if inside == 1 && sum(buttons) > 0
                    
                  
-                r_given_exp = mx/255;
+                r_given_exp = (mx-255)/(750-5-255);
                 end
-
+ 
     
                 disp(r_given_exp);
             
@@ -189,7 +189,9 @@ while trialNum < 5
                 Screen('FillRect', window, [1 0 0] , centeredRect);
             
                 % Draw a white dot where the mouse cursor is
+                if sum(buttons) > 0
                 Screen('DrawDots', window, [mx my], 10, white, [], 2);
+                end
             
                 % Check to see if the mouse button has been released and if so reset
                 % the offset cue
@@ -227,41 +229,38 @@ while trialNum < 5
                 % moving the mouse, correcting for the offset between the centre of the
                 % square and the mouse position
             
-                if inside == 1 
-                    sx = mx - dx;
-                    corrected_sx = 255*((sx-255)/(750-255));
-                end
-
-                if sx < 255
-                        sx = 255;
+                if mx < 255
+                        mx = 255;
                         
                 end 
                 
-                if sx > 750
-                    sx = 750;
+                if mx > 750
+                    mx = 750;
                 end
-           
-                r_given_exp = corrected_sx/255;
+
+                if inside == 1 && sum(buttons) > 0
+                   
+                 
+                r_given_exp = (mx-255)/(750-5-255);
+                end
+
     
                 disp(r_given_exp);
-
-                % Draw a line behind the red rectangle to simulate a slider
-                Screen('DrawLine', window, [0], 250, 660, 750, 660);
-            
-                % Center the rectangle on its new screen position
-                centeredRect = CenterRectOnPointd(baseRect2, sx, sy);
             
                 % Draw the rect to the screen
                 Screen('FillRect', window, [1 0 0] , centeredRect);
             
                 % Draw a white dot where the mouse cursor is
+                if sum(buttons) > 0
                 Screen('DrawDots', window, [mx my], 10, white, [], 2);
+                end
             
                 % Check to see if the mouse button has been released and if so reset
                 % the offset cue
                 if sum(buttons) <= 0
                     offsetSet = 0;
                 end
+    
     
                 %Flip to the screen
                 Screen('Flip', window);
@@ -289,46 +288,42 @@ while trialNum < 5
                     offsetSet = 1;
                 end
             
-                % If we are clicking on the square allow its position to be modified by
+               % If we are clicking on the square allow its position to be modified by
                 % moving the mouse, correcting for the offset between the centre of the
                 % square and the mouse position
             
-                 if inside == 1 
-                    sx = mx - dx;
-                    corrected_sx = 255*((sx-255)/(750-255));
-                 end
-
-
-                if sx < 255
-                        sx = 255;
+                if mx < 255
+                        mx = 255;
                         
                 end 
                 
-                if sx > 750
-                    sx = 750;
+                if mx > 750
+                    mx = 750;
                 end
-           
-                g_given_exp = corrected_sx/255;
+
+                if inside == 1 && sum(buttons) > 0
+                   
+                 
+                g_given_exp = (mx-255)/(750-5-255);
+                end
+
     
                 disp(g_given_exp);
-
-                % Draw a line behind the red rectangle to simulate a slider
-                Screen('DrawLine', window, [0], 250, 660, 750, 660);
-            
-                % Center the rectangle on its new screen position
-                centeredRect = CenterRectOnPointd(baseRect2, sx, sy);
             
                 % Draw the rect to the screen
                 Screen('FillRect', window, [1 0 0] , centeredRect);
             
                 % Draw a white dot where the mouse cursor is
+                if sum(buttons) > 0
                 Screen('DrawDots', window, [mx my], 10, white, [], 2);
+                end
             
                 % Check to see if the mouse button has been released and if so reset
                 % the offset cue
                 if sum(buttons) <= 0
                     offsetSet = 0;
                 end
+    
     
                 %Flip to the screen
                 Screen('Flip', window);
@@ -360,37 +355,31 @@ while trialNum < 5
                 % moving the mouse, correcting for the offset between the centre of the
                 % square and the mouse position
             
-                if inside == 1 
-                    sx = mx - dx;
-                    corrected_sx = 255*((sx-255)/(750-255));
-                end
-
-
-                if sx < 255
-                        sx = 255;
+                if mx < 255
+                        mx = 255;
                         
                 end 
                 
-                if sx > 750
-                    sx = 750;
+                if mx > 750
+                    mx = 750;
                 end
-           
-            
-                g_given_exp = corrected_sx/255;
+
+                if inside == 1 && sum(buttons) > 0
+                   
+                 
+                g_given_exp = (mx-255)/((750-5)-255);
+                end
+
     
                 disp(g_given_exp);
-
-                % Draw a line behind the red rectangle to simulate a slider
-                Screen('DrawLine', window, [0], 250, 660, 750, 660);
-            
-                % Center the rectangle on its new screen position
-                centeredRect = CenterRectOnPointd(baseRect2, sx, sy);
             
                 % Draw the rect to the screen
                 Screen('FillRect', window, [1 0 0] , centeredRect);
             
                 % Draw a white dot where the mouse cursor is
+                if sum(buttons) > 0
                 Screen('DrawDots', window, [mx my], 10, white, [], 2);
+                end
             
                 % Check to see if the mouse button has been released and if so reset
                 % the offset cue
