@@ -28,7 +28,7 @@ Screen('Flip', window);
 ifi = Screen('GetFlipInterval', window);
 
 % Set the text size
-Screen('TextSize', window, 40);
+Screen('TextSize', window, 30);
 
 % Query the maximum priority level
 topPriorityLevel = MaxPriority(window);
@@ -78,7 +78,7 @@ rgbColors = [0.2 0.6 1; 0.3 0.8 0.9; 0.2 0.1 0.4; 0.1 0.1 0.8];
 condMatrixBase = [sort(repmat([1 2 3 4], 1, 3)); repmat([1 2 3 4], 1, 3)];
 
 % Number of trials per condition. We set this to one to give
-% us a total of 16 trials.
+% us a total of 12 trials.
 trialsPerCondition = 1;
 
 % Duplicate the condition matrix to get the full number of trials
@@ -177,7 +177,7 @@ end
 
 % Draw the rect to the screen
 Screen('FillRect', window, allColors, allRects);
-DrawFormattedText(window,'  Sky         Water           Dark         Royal',150,400)
+DrawFormattedText(window,'     Sky                Water               Dark               Royal',150,400)
 
 % Flip to the screen
 Screen('Flip', window);
@@ -187,8 +187,7 @@ KbStrokeWait;
 
 end
 
-
-    % Flip again to sync us to the vertical retrace at the same time as
+% Flip again to sync us to the vertical retrace at the same time as
     % drawing our fixation point
     Screen('DrawDots', window, [xCenter; yCenter], 10, black, [], 2);
     vbl = Screen('Flip', window);
@@ -271,14 +270,10 @@ DrawFormattedText(window, 'You have completed Level Three! \n\n Press any key to
     'center', 'center', black);
 Screen('Flip', window);
 KbStrokeWait;
-DrawFormattedText(window, 'You have completed Level One! \n\n Press any key to see your results',...
-    'center', 'center', black);
+DrawFormattedText(window, sprintf('Your average reaction time is: %d seconds \n Press any key to see your score!', averagert),'center','center',black);
 Screen('Flip', window);
 KbStrokeWait;
-DrawFormattedText(window, sprintf('Your average reaction time is: %d\n Press any key to see your score!', averagert),'center','center',black);
-Screen('Flip', window);
-KbStrokeWait;
-DrawFormattedText(window, sprintf('Your score was: %d\n ', accuracypercent),'center','center',black);
+DrawFormattedText(window, sprintf('Your score was: %d percent! \n ', accuracypercent),'center','center',black);
 Screen('Flip', window);
 KbStrokeWait;
 sca;

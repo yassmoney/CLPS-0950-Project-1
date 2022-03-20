@@ -76,7 +76,7 @@ rgbColors = [0.9 0.6 0.7; 1 0.6 0; 0.9 0.6 1; 0.5 0 0.1];
 condMatrixBase = [sort(repmat([1 2 3 4], 1, 3)); repmat([1 2 3 4], 1, 3)];
 
 % Number of trials per condition. We set this to one to give
-% us a total of 16 trials.
+% us a total of 12 trials.
 trialsPerCondition = 1;
 
 % Duplicate the condition matrix to get the full number of trials
