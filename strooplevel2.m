@@ -128,6 +128,7 @@ for trial = 1:numTrials
         DrawFormattedText(window, 'A word will appear on your screen \n\n and will be colored either pink, orange, lavender or maroon. \n\n If pink, press the P key! \n\n If orange, press the O key! \n\n If lavender, press the L key!, \n\n If maroon, press the M key! \n\n Press any key to start!! \n\n  You can quit anytime by pressing ESC!','center', 'center', black);
         Screen('Flip', window);
         KbStrokeWait;
+    
 %----------------------------------------------------------------------
 %                       Priming Screen for Colors: 
 %----------------------------------------------------------------------
@@ -181,8 +182,6 @@ Screen('Flip', window);
 
 % Wait for a key press
 KbStrokeWait;
-
-
 
     end
 

@@ -130,7 +130,7 @@ for trial = 1:numTrials
         DrawFormattedText(window, 'A word will appear on your screen \n\n and will be colored either sky blue, water blue, dark blue or royal blue. \n\n If sky blue, press the S key! \n\n If water blue, press the W key! \n\n If dark blue, press the D key!, \n\n If royal blue, press the R key! \n\n Press any key to start!! \n\n  You can quit anytime by pressing ESC!','center', 'center', black);
         Screen('Flip', window);
         KbStrokeWait;
-    end
+    
 %----------------------------------------------------------------------
 %                       Priming Screen for Colors: 
 %----------------------------------------------------------------------
@@ -256,6 +256,7 @@ end
  else
      respMat(5,trial)= 0
     end
+end
 
 % Result Data
 averagereaction= sum(respMat(4,:))
