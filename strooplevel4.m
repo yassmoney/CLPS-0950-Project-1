@@ -71,7 +71,7 @@ escapeKey= KbName('ESCAPE');
 %----------------------------------------------------------------------
 
 % For this condition we are using four types of Green!
-wordList = {'GRASS GREEN', 'FERN GREEN', 'VERMONT GREEN', 'CHRISTMAS GREEN'};
+wordList = {'GRASS GREEN', 'FERN GREEN', 'VERDANT GREEN', 'CHRISTMAS GREEN'};
 rgbColors = [0.2 0.8 0; 0.2 0.7 0.1; 0.2 0.7 0.3; 0.2 0.9 0.5];
 
 % Make the matrix which will determine our condition combinations
@@ -128,46 +128,11 @@ for trial = 1:numTrials
             'center', 'center', black);
         Screen('Flip', window);
         KbStrokeWait;
-        DrawFormattedText(window, 'A word will appear on your screen \n\n and will be colored either grass green, fern green, Vermont green or Christmas green. \n\n If grass green, press the G key! \n\n If fern green, press the F key! \n\n If verdant green, press the V key!, \n\n If Christmas green, press the C key! \n\n Press any key to start!! \n\n  You can quit anytime by pressing ESC!','center', 'center', black);
+        DrawFormattedText(window, 'A word will appear on your screen \n\n and will be colored either grass green, fern green, verdant green or Christmas green. \n\n If grass green, press the G key! \n\n If fern green, press the F key! \n\n If verdant green, press the V key!, \n\n If Christmas green, press the C key! \n\n Press any key to start!! \n\n  You can quit anytime by pressing ESC!','center', 'center', black);
         Screen('Flip', window);
         KbStrokeWait;
     end
-%----------------------------------------------------------------------
-%                     Setting Colors for Participants 
-%----------------------------------------------------------------------
-        
-        % Get the size of the on screen window
-[screenXpixels, screenYpixels] = Screen('WindowSize', window);
 
-% Get the centre coordinate of the window
-[xCenter, yCenter] = RectCenter(windowRect);
-
-% Make a base Rect of 200 by 200 pixels
-baseRect = [0 0 200 200];
-
-% Screen X positions of our three rectangles
-squareXpos = [screenXpixels * 0.25 screenXpixels * 0.5 screenXpixels * 0.75];
-numSqaures = length(squareXpos);
-
-% Set the colors to 'GRASS GREEN', 'FERN GREEN', 'VERMONT GREEN', 'CHRISTMAS GREEN'
-allColors = [0.2 0.8 0; 0.2 0.7 0.1; 0.2 0.7 0.3; 0.2 0.9 0.5];
-
-% Make our rectangle coordinates
-allRects = nan(4, 3);
-for i = 1:numSqaures
-    allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
-end
-
-% Draw the rect to the screen
-Screen('FillRect', window, allColors, allRects);
-
-% Flip to the screen
-Screen('Flip', window);
-
-% Wait for a key press
-KbStrokeWait;
-    end
-%----------------------------------------------------------------------
     % Flip again to sync us to the vertical retrace at the same time as
     % drawing our fixation point
     Screen('DrawDots', window, [xCenter; yCenter], 10, black, [], 2);

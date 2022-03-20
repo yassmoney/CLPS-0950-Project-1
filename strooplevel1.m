@@ -144,29 +144,44 @@ for trial = 1:numTrials
         DrawFormattedText(window, 'A word will appear on your screen \n\n and will be colored either red, yellow, green or blue.\n\n If green, press the g key! \n\n If red, press the r key! \n\n If yellow, press the y key!, \n\n If blue, press the b key! \n\n Press any key to start!! \n\n  You can quit anytime by pressing ESC!','center', 'center', black)
         Screen('Flip', window);
         KbStrokeWait;
-%----------------------------------------------------------------------
-%                     Setting Colors for Participants 
-%----------------------------------------------------------------------
-        
-        % Get the size of the on screen window
+ % Get the size of the on screen window
 [screenXpixels, screenYpixels] = Screen('WindowSize', window);
 
 % Get the centre coordinate of the window
 [xCenter, yCenter] = RectCenter(windowRect);
 
 % Make a base Rect of 200 by 200 pixels
-baseRect = [0 0 200 200];
+baseRect = [0 0 150 150];
 
-% Screen X positions of our three rectangles
-squareXpos = [screenXpixels * 0.25 screenXpixels * 0.5 screenXpixels * 0.75];
-numSqaures = length(squareXpos);
+% Screen X positions of our four rectangles
+squareXpos = [screenXpixels * 0.2 screenXpixels * 0.4 screenXpixels*.6];
+numSquares = length(squareXpos);
 
 % Set the colors to Red, Green and Blue
-allColors = [1 0 0; 0 1 0; 0 0 1; 1 1 0];
+allColors1 = [1 0 0 ; 0 1 0 ;  0 0 0 ]
 
 % Make our rectangle coordinates
 allRects = nan(4, 3);
-for i = 1:numSqaures
+for i = 1:numSquares
+    allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
+end
+
+% Draw the rect to the screen
+Screen('FillRect', window, allColors1, allRects);
+
+% Make a base Rect of 200 by 200 pixels
+baseRect = [0 0 150 150];
+
+% Screen X positions of our four rectangles
+squareXpos = [screenXpixels * 0.8 screenXpixels * 0.6 screenXpixels*.4];
+numSquares = length(squareXpos);
+
+% Set the colors to Red, Green and Blue
+allColors = [ 0 0 1 ; 1 0 1 ; 0 1 0 ]
+
+% Make our rectangle coordinates
+allRects = nan(4, 3);
+for i = 1:numSquares
     allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
 end
 
@@ -181,7 +196,7 @@ Screen('Flip', window);
 % Wait for a key press
 KbStrokeWait;
     end
-%----------------------------------------------------------------------
+
     % Flip again to sync us to the vertical retrace at the same time as
     % drawing our fixation point
     Screen('DrawDots', window, [xCenter; yCenter], 10, black, [], 2);

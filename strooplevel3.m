@@ -131,42 +131,7 @@ for trial = 1:numTrials
         Screen('Flip', window);
         KbStrokeWait;
     end
-%----------------------------------------------------------------------
-%                     Setting Colors for Participants 
-%----------------------------------------------------------------------
-        
-        % Get the size of the on screen window
-[screenXpixels, screenYpixels] = Screen('WindowSize', window);
 
-% Get the centre coordinate of the window
-[xCenter, yCenter] = RectCenter(windowRect);
-
-% Make a base Rect of 200 by 200 pixels
-baseRect = [0 0 200 200];
-
-% Screen X positions of our 4 rectangles
-squareXpos = [screenXpixels * 0.25 screenXpixels * 0.5 screenXpixels * 0.75];
-numSqaures = length(squareXpos);
-
-% Set the colors to 'SKY BLUE', 'WATER BLUE', 'DARK BLUE', 'ROYAL BLUE'
-allColors = [0.2 0.6 1; 0.3 0.8 0.9; 0.2 0.1 0.4; 0.1 0.1 0.8];
-
-% Make our rectangle coordinates
-allRects = nan(4, 3);
-for i = 1:numSqaures
-    allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
-end
-
-% Draw the rect to the screen
-Screen('FillRect', window, allColors, allRects);
-
-% Flip to the screen
-Screen('Flip', window);
-
-% Wait for a key press
-KbStrokeWait;
-    end
-%----------------------------------------------------------------------
     % Flip again to sync us to the vertical retrace at the same time as
     % drawing our fixation point
     Screen('DrawDots', window, [xCenter; yCenter], 10, black, [], 2);
