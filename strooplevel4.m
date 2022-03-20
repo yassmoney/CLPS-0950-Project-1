@@ -131,7 +131,7 @@ for trial = 1:numTrials
         DrawFormattedText(window, 'A word will appear on your screen \n\n and will be colored either grass green, fern green, verdant green or Christmas green. \n\n If grass green, press the G key! \n\n If fern green, press the F key! \n\n If verdant green, press the V key!, \n\n If Christmas green, press the C key! \n\n Press any key to start!! \n\n  You can quit anytime by pressing ESC!','center', 'center', black);
         Screen('Flip', window);
         KbStrokeWait;
-    end
+  
 %----------------------------------------------------------------------
 %                       Priming Screen for Colors: 
 %----------------------------------------------------------------------
@@ -178,7 +178,7 @@ end
 
 % Draw the rect to the screen
 Screen('FillRect', window, allColors, allRects);
-DrawFormattedText(window,'Grass Green      Fern Green      Vermont Green     Christmas Green',150,400)
+DrawFormattedText(window,'Grass        Fern       Vermont      Christmas',150,400)
 
 % Flip to the screen
 Screen('Flip', window);
@@ -186,7 +186,7 @@ Screen('Flip', window);
 % Wait for a key press
 KbStrokeWait;
 
-
+end
 
     % Flip again to sync us to the vertical retrace at the same time as
     % drawing our fixation point
@@ -230,6 +230,7 @@ KbStrokeWait;
             response = 4;
             respToBeMade = false;
         end
+    
 
         % Change screen
         vbl = Screen('Flip', window, vbl + (waitframes - 0.5) * ifi);
@@ -242,6 +243,11 @@ KbStrokeWait;
     respMat(2, trial) = colorNum;
     respMat(3, trial) = response;
     respMat(4, trial) = rt;
+ if colorNum == response
+    respMat(5,trial) = 1
+ else
+     respMat(5,trial)= 0
+ end
 
 end
 
@@ -254,11 +260,14 @@ accuracypercent= (accuracy/12)*100
 
 % End of experiment screen. We clear the screen once they have made their
 % response
-DrawFormattedText(window, 'You have completed Level Four! \n\n Press any key to see your results',...
+DrawFormattedText(window, 'You have completed Level Four! Congrats! \n\n Press any key to see your results',...
     'center', 'center', black);
 Screen('Flip', window);
 KbStrokeWait;
-DrawFormattedText(window,' Below you will find your accuracy \n\n and your average reaction time!','center', 'center', black);
+DrawFormattedText(window, sprintf('Your average RT was: %d seconds  \n Press any key to see your score!', averagert),'center','center',black);
+Screen('Flip', window);
+KbStrokeWait;
+DrawFormattedText(window, sprintf('Your score was: %d percent! \n Thanks for playing! Press any key to end! ', accuracypercent),'center','center',black);
 Screen('Flip', window);
 KbStrokeWait;
 sca;
