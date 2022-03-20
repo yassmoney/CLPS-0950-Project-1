@@ -29,7 +29,6 @@ black = BlackIndex(screenNumber);
 
 nextKey = KbName('RightArrow');
 escapeKey= KbName('ESCAPE');
-enterKey = KbName('ENTER')
 nKey = KbName('n')
 
 %----------------------------------------------------------------------
@@ -77,7 +76,7 @@ baseRect2 = [0 0 495 50];
 % Screen X and Y positions of our three rectangles
 squareXpos = [screenXpixels * 0.33 screenXpixels * 0.67];
 squareYpos = [screenYpixels * 0.33 screenYpixels * 0.33];
-numSqaures = length(squareXpos);
+numSqaures = length(squareXpos); 
 
 %----------------------------------------------------------------------
 %                       Mouse Specifications
@@ -86,9 +85,9 @@ numSqaures = length(squareXpos);
 SetMouse(screenXpixels * 0.33, screenYpixels * 0.66, window);
 
 % We now set the squares initial position to the centre of the screen
-sx = screenXpixels * 0.50;
+sx = screenXpixels * 0.33;
 sy = screenYpixels * 0.66;
-centeredRect = CenterRectOnPointd(baseRect2, sx, sy);
+centeredRect = CenterRectOnPointd(baseRect2, xCenter, sy);
 offsetSet = 0;
 
 % Sync us and get a time stamp
@@ -107,9 +106,8 @@ Priority(topPriorityLevel);
 trialNum = 0;
 scoreTally = 0;
 
-while trialNum < 5
+while trialNum < 12
     [keyIsDown,secs, keyCode] = KbCheck;
-    %trialNum = trialNum + 1;
     if keyCode(escapeKey)
         ShowCursor;
         sca;
@@ -128,7 +126,7 @@ while trialNum < 5
             %trialType 2: r is changed, final squaresn cannot match
             %trialType 3: g is changed, final squares can match
             %trialType 4: g is changed, final squares cannot match
-        trialType = randi(4,1);
+        trialType = randi(4,1)
         
         % Make our rectangle coordinates
         allRects = nan(4, 3);
@@ -156,7 +154,7 @@ while trialNum < 5
                 % If the mouse cursor is inside the square and a mouse button is being
                 % pressed and the offset has not been set, set the offset and signal
                 % that it has been set
-                if inside == 1 && offsetSet == 0
+                if inside == 1 && sum(buttons) > 0 && offsetSet == 0
                     dx = mx - cx;
                     dy = my - cy;
                     offsetSet = 1;
@@ -166,31 +164,33 @@ while trialNum < 5
                 % moving the mouse, correcting for the offset between the centre of the
                 % square and the mouse position
             
-                if inside == 1 
-                    sx = mx - dx;
-                    corrected_sx = 255*((sx-255)/(750-255));
-                end
-
-                if sx < 255
-                    sx = 255;
+               
+                 if mx < 255
+                        mx = 255;
                         
                 end 
                 
-                if sx > 750
-                    sx = 750;
+                if mx > 750
+                    mx = 750;
                 end
-            
-                r_given_exp = corrected_sx/255;
+
+                if inside == 1 && sum(buttons) > 0
+                   
+                 
+                r_given_exp = (mx-255)/(750-5-255);
+                end
+ 
     
                 disp(r_given_exp);
-                % Center the rectangle on its new screen position
-                centeredRect = CenterRectOnPointd(baseRect2, sx, sy);
             
                 % Draw the rect to the screen
-                Screen('FillRect', window, [1 0 0] , centeredRect);
+                   gray = GrayIndex(window,0.3);
+                       Screen('FillRect', window, gray, centeredRect);
             
                 % Draw a white dot where the mouse cursor is
+                if sum(buttons) > 0
                 Screen('DrawDots', window, [mx my], 10, white, [], 2);
+                end
             
                 % Check to see if the mouse button has been released and if so reset
                 % the offset cue
@@ -228,40 +228,39 @@ while trialNum < 5
                 % moving the mouse, correcting for the offset between the centre of the
                 % square and the mouse position
             
-                if inside == 1 
-                    sx = mx - dx;
-                    corrected_sx = 255*((sx-255)/(750-255));
-                end
-
-                if sx < 255
-                        sx = 255;
+                if mx < 255
+                        mx = 255;
                         
                 end 
                 
-                if sx > 750
-                    sx = 750;
+                if mx > 750
+                    mx = 750;
                 end
-           
-                r_given_exp = corrected_sx/255;
+
+                if inside == 1 && sum(buttons) > 0
+                   
+                 
+                r_given_exp = (mx-255)/(750-5-255);
+                end
+
     
                 disp(r_given_exp);
-
-         
-            
-                % Center the rectangle on its new screen position
-                centeredRect = CenterRectOnPointd(baseRect2, sx, sy);
             
                 % Draw the rect to the screen
-                Screen('FillRect', window, [1 0 0] , centeredRect);
+                       gray = GrayIndex(window,0.3);
+                       Screen('FillRect', window, gray, centeredRect);
             
                 % Draw a white dot where the mouse cursor is
+                if sum(buttons) > 0
                 Screen('DrawDots', window, [mx my], 10, white, [], 2);
+                end
             
                 % Check to see if the mouse button has been released and if so reset
                 % the offset cue
                 if sum(buttons) <= 0
                     offsetSet = 0;
                 end
+    
     
                 %Flip to the screen
                 Screen('Flip', window);
@@ -289,45 +288,43 @@ while trialNum < 5
                     offsetSet = 1;
                 end
             
-                % If we are clicking on the square allow its position to be modified by
+               % If we are clicking on the square allow its position to be modified by
                 % moving the mouse, correcting for the offset between the centre of the
                 % square and the mouse position
             
-                 if inside == 1 
-                    sx = mx - dx;
-                    corrected_sx = 255*((sx-255)/(750-255));
-                 end
-
-
-                if sx < 255
-                        sx = 255;
+                if mx < 255
+                        mx = 255;
                         
                 end 
                 
-                if sx > 750
-                    sx = 750;
+                if mx > 750
+                    mx = 750;
                 end
-           
-                g_given_exp = corrected_sx/255;
+
+                if inside == 1 && sum(buttons) > 0
+                   
+                 
+                g_given_exp = (mx-255)/(750-5-255);
+                end
+
     
                 disp(g_given_exp);
-
-            
-            
-                % Center the rectangle on its new screen position
-                centeredRect = CenterRectOnPointd(baseRect2, sx, sy);
             
                 % Draw the rect to the screen
-                Screen('FillRect', window, [1 0 0] , centeredRect);
+                gray = GrayIndex(window,0.3);
+                       Screen('FillRect', window, gray, centeredRect);
             
                 % Draw a white dot where the mouse cursor is
+                if sum(buttons) > 0
                 Screen('DrawDots', window, [mx my], 10, white, [], 2);
+                end
             
                 % Check to see if the mouse button has been released and if so reset
                 % the offset cue
                 if sum(buttons) <= 0
                     offsetSet = 0;
                 end
+    
     
                 %Flip to the screen
                 Screen('Flip', window);
@@ -359,40 +356,37 @@ while trialNum < 5
                 % moving the mouse, correcting for the offset between the centre of the
                 % square and the mouse position
             
-                if inside == 1 
-                    sx = mx - dx;
-                    corrected_sx = 255*((sx-255)/(750-255));
-                end
-
-
-                if sx < 255
-                        sx = 255;
+                if mx < 255
+                        mx = 255;
                         
                 end 
                 
-                if sx > 750
-                    sx = 750;
+                if mx > 750
+                    mx = 750;
                 end
-           
-            
-                g_given_exp = corrected_sx/255;
+
+                if inside == 1 && sum(buttons) > 0
+                   
+                 
+                g_given_exp = (mx-255)/((750-5)-255);
+                end
+
     
                 disp(g_given_exp);
-
-            
-                % Center the rectangle on its new screen position
-                centeredRect = CenterRectOnPointd(baseRect2, sx, sy);
             
                 % Draw the rect to the screen
-                Screen('FillRect', window, [1 0 0] , centeredRect);
+                      gray = GrayIndex(window,0.3);
+                       Screen('FillRect', window, gray, centeredRect);
             
                 % Draw a white dot where the mouse cursor is
+                if sum(buttons) > 0
                 Screen('DrawDots', window, [mx my], 10, white, [], 2);
+                end
             
                 % Check to see if the mouse button has been released and if so reset
                 % the offset cue
                 if sum(buttons) <= 0
-                    offsetSet = 0;
+                    offsetSet = 0;  
                 end
     
                 %Flip to the screen
@@ -416,13 +410,13 @@ while trialNum < 5
             if trialType == 2 || trialType == 4
                 scoreTally = 0;
             elseif trialType == 1 
-                if abs(r_given - r_given_exp) <= 0.15
+                if abs(r_given - r_given_exp) <= 0.10
                     scoreTally = scoreTally + 1;
                 else
                     scoreTally = scoreTally + 0;
                 end 
             elseif trialType == 3
-                if abs(g_given - g_given_exp) <= 0.15
+                if abs(g_given - g_given_exp) <= 0.10
                     scoreTally = scoreTally + 1;
                 else 
                     scoreTally = scoreTally + 0;
@@ -444,7 +438,22 @@ DrawFormattedText(window, [strcat('Your score is: ','  ', scoreDisp, '%. \n\n Pr
     'center', 'center', black);
 Screen('Flip', window);
 
+if RGBscore < 0.25
+    DrawFormattedText(window, 'You might be color blind! \n\n Just kidding lol we are not medical professionals, \n\n but you might just be stupid (aw rip)',...
+    'center', 'center', black);
+    Screen('Flip', window);
+    KbStrokeWait;
+    DrawFormattedText(window, 'You will now be continuing on to STROOP TEST LEVEL 1',...
+    'center', 'center', black);
+    Screen('Flip', window);
+elseif RGBscore >= 0.25 && RGBscore < 0.50
+    DrawFormattedText(window, 'You will now be continuing on to STROOP TEST LEVEL 2',...
+    'center', 'center', black);
+    Screen('Flip', window);
+elseif RGBscore >= 0.50 && RGBscore < 0.75
+    DrawFormattedText(window, 'You will now be continuing on to STROOP TEST LEVEL 2',...
+    'center', 'center', black);
+    Screen('Flip', window);
 KbStrokeWait;
-
 % Clear the screen
 sca;
