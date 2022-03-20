@@ -29,7 +29,6 @@ black = BlackIndex(screenNumber);
 
 nextKey = KbName('RightArrow');
 escapeKey= KbName('ESCAPE');
-enterKey = KbName('ENTER')
 nKey = KbName('n')
 
 %----------------------------------------------------------------------
@@ -107,9 +106,8 @@ Priority(topPriorityLevel);
 trialNum = 0;
 scoreTally = 0;
 
-while trialNum < 5
+while trialNum < 12
     [keyIsDown,secs, keyCode] = KbCheck;
-    %trialNum = trialNum + 1;
     if keyCode(escapeKey)
         ShowCursor;
         sca;
@@ -128,7 +126,7 @@ while trialNum < 5
             %trialType 2: r is changed, final squaresn cannot match
             %trialType 3: g is changed, final squares can match
             %trialType 4: g is changed, final squares cannot match
-        trialType = 3
+        trialType = randi(4,1)
         
         % Make our rectangle coordinates
         allRects = nan(4, 3);
@@ -412,13 +410,13 @@ while trialNum < 5
             if trialType == 2 || trialType == 4
                 scoreTally = 0;
             elseif trialType == 1 
-                if abs(r_given - r_given_exp) <= 0.15
+                if abs(r_given - r_given_exp) <= 0.10
                     scoreTally = scoreTally + 1;
                 else
                     scoreTally = scoreTally + 0;
                 end 
             elseif trialType == 3
-                if abs(g_given - g_given_exp) <= 0.15
+                if abs(g_given - g_given_exp) <= 0.10
                     scoreTally = scoreTally + 1;
                 else 
                     scoreTally = scoreTally + 0;
