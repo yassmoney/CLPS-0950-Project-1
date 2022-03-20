@@ -1,8 +1,8 @@
 %% Intro Page %%
 
 
+
 pic= imread("IMG_9145.jpeg","jpg")
-imshow(pic)
 
 position = [300 800]; 
 box_color = {'yellow'};
@@ -33,4 +33,4 @@ end
 run("Exitscreen.m")
 
 
-
+waitforbuttonpress
