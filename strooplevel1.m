@@ -144,6 +144,9 @@ for trial = 1:numTrials
         DrawFormattedText(window, 'A word will appear on your screen \n\n and will be colored either red, yellow, green or blue.\n\n If green, press the g key! \n\n If red, press the r key! \n\n If yellow, press the y key!, \n\n If blue, press the b key! \n\n Press any key to start!! \n\n  You can quit anytime by pressing ESC!','center', 'center', black)
         Screen('Flip', window);
         KbStrokeWait;
+%----------------------------------------------------------------------
+%                       Priming Screen for Colors: 
+%----------------------------------------------------------------------
  % Get the size of the on screen window
 [screenXpixels, screenYpixels] = Screen('WindowSize', window);
 

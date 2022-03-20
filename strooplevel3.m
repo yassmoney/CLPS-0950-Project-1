@@ -131,7 +131,63 @@ for trial = 1:numTrials
         Screen('Flip', window);
         KbStrokeWait;
     end
+%----------------------------------------------------------------------
+%                       Priming Screen for Colors: 
+%----------------------------------------------------------------------
+        % Get the size of the on screen window
+[screenXpixels, screenYpixels] = Screen('WindowSize', window);
 
+% Get the centre coordinate of the window
+[xCenter, yCenter] = RectCenter(windowRect);
+
+% Make a base Rect of 200 by 200 pixels
+baseRect = [0 0 150 150];
+
+% Screen X positions of our four rectangles
+squareXpos = [screenXpixels * 0.2 screenXpixels * 0.4 screenXpixels*.6];
+numSquares = length(squareXpos);
+
+% Set the colors to SKY BLUE, WATER BLUE, DARK BLUE, ROYAL BLUE 
+allColors1 = [.2 .2 .1 .3 ; .6 .1 .1 .8;  1 .4 .8 .9]
+
+% Make our rectangle coordinates
+allRects = nan(4, 4);
+for i = 1:numSquares
+    allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
+end
+
+% Draw the rect to the screen
+Screen('FillRect', window, allColors1, allRects);
+
+% Make a base Rect of 200 by 200 pixels
+baseRect = [0 0 150 150];
+
+% Screen X positions of our four rectangles
+squareXpos = [screenXpixels * 0.8 screenXpixels * 0.6 screenXpixels*.4];
+numSquares = length(squareXpos);
+
+% Set the colors to SKY BLUE, WATER BLUE, DARK BLUE, ROYAL BLUE 
+allColors = [ .1 .2 .3 .2 ; .1 .1 .8 .6;  .8 .4 .6 1 ]
+
+% Make our rectangle coordinates
+allRects = nan(4, 4);
+for i = 1:numSquares
+    allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
+end
+
+% Draw the rect to the screen
+Screen('FillRect', window, allColors, allRects);
+DrawFormattedText(window,'SKY BLUE          WATER BLUE      DARK BLUE     ROYAL BLUE  ',150,400)
+
+% Flip to the screen
+Screen('Flip', window);
+
+% Wait for a key press
+KbStrokeWait;
+
+
+
+    end
     % Flip again to sync us to the vertical retrace at the same time as
     % drawing our fixation point
     Screen('DrawDots', window, [xCenter; yCenter], 10, black, [], 2);
