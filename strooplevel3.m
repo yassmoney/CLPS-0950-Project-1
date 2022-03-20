@@ -3,7 +3,7 @@ close all;
 clear;
 sca;
 
-% Setting up default values
+% Setting up default values 
 PsychDefaultSetup(2);
 
 % Create a random number generator
@@ -177,17 +177,17 @@ end
 
 % Draw the rect to the screen
 Screen('FillRect', window, allColors, allRects);
-DrawFormattedText(window,'Sky Blue      Water Blue      Dark Blue     Royal Blue',150,400)
+DrawFormattedText(window,'  Sky         Water           Dark         Royal',150,400)
 
 % Flip to the screen
 Screen('Flip', window);
 
 % Wait for a key press
-KbStrokeWait;
+KbStrokeWait;     
+
+end
 
 
-
-    end
     % Flip again to sync us to the vertical retrace at the same time as
     % drawing our fixation point
     Screen('DrawDots', window, [xCenter; yCenter], 10, black, [], 2);
@@ -252,6 +252,11 @@ KbStrokeWait;
     respMat(3, trial) = response;
     respMat(4, trial) = rt;
 
+    if colorNum == response
+    respMat(5,trial) = 1
+ else
+     respMat(5,trial)= 0
+    end
 
 % Result Data
 averagereaction= sum(respMat(4,:))

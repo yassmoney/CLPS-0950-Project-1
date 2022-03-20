@@ -285,10 +285,10 @@ DrawFormattedText(window, 'You have completed Level One! \n\n Press any key to s
     'center', 'center', black);
 Screen('Flip', window);
 KbStrokeWait;
-DrawFormattedText(window, sprintf('Your average reaction time is: %d\n Press any key to see your score!', averagert),'center','center',black);
+DrawFormattedText(window, sprintf('Your average RT was: %d seconds  \n Press any key to see your score!', averagert),'center','center',black);
 Screen('Flip', window);
 KbStrokeWait;
-DrawFormattedText(window, sprintf('Your score was: %d\n ', accuracypercent),'center','center',black);
+DrawFormattedText(window, sprintf('Your score was: %d percent! \n Thanks for playing! Press any key to end! ', accuracypercent),'center','center',black);
 Screen('Flip', window);
 KbStrokeWait;
 sca;
