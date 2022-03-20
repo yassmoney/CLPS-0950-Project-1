@@ -252,7 +252,6 @@ KbStrokeWait;
     respMat(3, trial) = response;
     respMat(4, trial) = rt;
 
-end
 
 % Result Data
 averagereaction= sum(respMat(4,:))
