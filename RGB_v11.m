@@ -77,7 +77,7 @@ baseRect2 = [0 0 495 50];
 % Screen X and Y positions of our three rectangles
 squareXpos = [screenXpixels * 0.33 screenXpixels * 0.67];
 squareYpos = [screenYpixels * 0.33 screenYpixels * 0.33];
-numSqaures = length(squareXpos);
+numSqaures = length(squareXpos); 
 
 %----------------------------------------------------------------------
 %                       Mouse Specifications
@@ -186,7 +186,8 @@ while trialNum < 5
                 disp(r_given_exp);
             
                 % Draw the rect to the screen
-                Screen('FillRect', window, [1 0 0] , centeredRect);
+                   gray = GrayIndex(window,0.3);
+                       Screen('FillRect', window, gray, centeredRect);
             
                 % Draw a white dot where the mouse cursor is
                 if sum(buttons) > 0
@@ -248,7 +249,8 @@ while trialNum < 5
                 disp(r_given_exp);
             
                 % Draw the rect to the screen
-                Screen('FillRect', window, [1 0 0] , centeredRect);
+                       gray = GrayIndex(window,0.3);
+                       Screen('FillRect', window, gray, centeredRect);
             
                 % Draw a white dot where the mouse cursor is
                 if sum(buttons) > 0
@@ -311,7 +313,8 @@ while trialNum < 5
                 disp(g_given_exp);
             
                 % Draw the rect to the screen
-                Screen('FillRect', window, [1 0 0] , centeredRect);
+                gray = GrayIndex(window,0.3);
+                       Screen('FillRect', window, gray, centeredRect);
             
                 % Draw a white dot where the mouse cursor is
                 if sum(buttons) > 0
@@ -374,7 +377,8 @@ while trialNum < 5
                 disp(g_given_exp);
             
                 % Draw the rect to the screen
-                Screen('FillRect', window, [1 0 0] , centeredRect);
+                      gray = GrayIndex(window,0.3);
+                       Screen('FillRect', window, gray, centeredRect);
             
                 % Draw a white dot where the mouse cursor is
                 if sum(buttons) > 0
@@ -384,7 +388,7 @@ while trialNum < 5
                 % Check to see if the mouse button has been released and if so reset
                 % the offset cue
                 if sum(buttons) <= 0
-                    offsetSet = 0;
+                    offsetSet = 0;  
                 end
     
                 %Flip to the screen
