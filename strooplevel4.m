@@ -148,8 +148,8 @@ baseRect = [0 0 150 150];
 squareXpos = [screenXpixels * 0.2 screenXpixels * 0.4 screenXpixels*.6];
 numSquares = length(squareXpos);
 
-% Set the colors to SKY BLUE, WATER BLUE, DARK BLUE, ROYAL BLUE 
-allColors1 = [.2 .2 .1 .3 ; .6 .1 .1 .8;  1 .4 .8 .9]
+% Set the colors to 'GRASS GREEN, FERN GREEN, VERDANT GREEN, CHRISTMAS GREEN' 
+allColors1 = [.2 .2 .2 .2 ; .8 .7 .9 .7;  0 .1 .5 .1]
 
 % Make our rectangle coordinates
 allRects = nan(4, 4);
@@ -167,8 +167,8 @@ baseRect = [0 0 150 150];
 squareXpos = [screenXpixels * 0.8 screenXpixels * 0.6 screenXpixels*.4];
 numSquares = length(squareXpos);
 
-% Set the colors to SKY BLUE, WATER BLUE, DARK BLUE, ROYAL BLUE 
-allColors = [ .1 .2 .3 .2 ; .1 .1 .8 .6;  .8 .4 .6 1 ]
+% Set the colors to GRASS GREEN, FERN GREEN, VERDANT GREEN, CHRISTMAS GREEN 
+allColors = [ .2 .2 .2 .2 ; .9 .7 .7 .8;  .5 .3 .1 0]
 
 % Make our rectangle coordinates
 allRects = nan(4, 4);
@@ -178,7 +178,7 @@ end
 
 % Draw the rect to the screen
 Screen('FillRect', window, allColors, allRects);
-DrawFormattedText(window,'SKY BLUE          WATER BLUE      DARK BLUE     ROYAL BLUE  ',150,400)
+DrawFormattedText(window,'Grass Green      Fern Green      Vermont Green     Christmas Green',150,400)
 
 % Flip to the screen
 Screen('Flip', window);
