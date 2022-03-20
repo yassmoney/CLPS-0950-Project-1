@@ -71,8 +71,8 @@ escapeKey= KbName('ESCAPE');
 %----------------------------------------------------------------------
 
 % For this condition we are using four types of Green!
-wordList = {'GRASS GREEN', 'FERN GREEN', 'VERDANT GREEN', 'CHRISTMAS GREEN'};
-rgbColors = [0.2 0.8 0; 0.2 0.7 0.1; 0.2 0.7 0.3; 0.2 0.9 0.5];
+wordList = {'GRASS GREEN', 'FERN GREEN', 'VERMONT GREEN', 'CHRISTMAS GREEN'};
+rgbColors = [0.2 0.8 0; 0.2 0.7 0.1; 0.2 0.7 0.4; 0.2 0.9 0.5];
 
 % Make the matrix which will determine our condition combinations
 condMatrixBase = [sort(repmat([1 2 3 4], 1, 3)); repmat([1 2 3 4], 1, 3)];
@@ -128,7 +128,7 @@ for trial = 1:numTrials
             'center', 'center', black);
         Screen('Flip', window);
         KbStrokeWait;
-        DrawFormattedText(window, 'A word will appear on your screen \n\n and will be colored either grass green, fern green, verdant green or Christmas green. \n\n If grass green, press the G key! \n\n If fern green, press the F key! \n\n If verdant green, press the V key!, \n\n If Christmas green, press the C key! \n\n Press any key to start!! \n\n  You can quit anytime by pressing ESC!','center', 'center', black);
+        DrawFormattedText(window, 'A word will appear on your screen \n\n and will be colored either grass green, fern green, \n\n Vermont green or Christmas green. \n\n If grass green, press the G key! \n\n If fern green, press the F key! \n\n If Vermont green, press the V key!, \n\n If Christmas green, press the C key! \n\n Press any key to start!! \n\n  You can quit anytime by pressing ESC!','center', 'center', black);
         Screen('Flip', window);
         KbStrokeWait;
   
@@ -148,8 +148,8 @@ baseRect = [0 0 150 150];
 squareXpos = [screenXpixels * 0.2 screenXpixels * 0.4 screenXpixels*.6];
 numSquares = length(squareXpos);
 
-% Set the colors to 'GRASS GREEN, FERN GREEN, VERDANT GREEN, CHRISTMAS GREEN' 
-allColors1 = [.2 .2 .2 .2 ; .8 .7 .9 .7;  0 .1 .5 .1]
+% Set the colors to 'GRASS GREEN, FERN GREEN, VERMONT GREEN, CHRISTMAS GREEN' 
+allColors1 = [.2 .2 .2 .2 ; .8 .7 .9 .7;  0 .4 .5 .1]
 
 % Make our rectangle coordinates
 allRects = nan(4, 4);
@@ -168,7 +168,7 @@ squareXpos = [screenXpixels * 0.8 screenXpixels * 0.6 screenXpixels*.4];
 numSquares = length(squareXpos);
 
 % Set the colors to GRASS GREEN, FERN GREEN, VERDANT GREEN, CHRISTMAS GREEN 
-allColors = [ .2 .2 .2 .2 ; .9 .7 .7 .8;  .5 .3 .1 0]
+allColors = [ .2 .2 .2 .2 ; .9 .7 .7 .8;  .5 .4 .1 0]
 
 % Make our rectangle coordinates
 allRects = nan(4, 4);
@@ -221,13 +221,13 @@ end
             response = 1;
             respToBeMade = false;
         elseif keyCode(verdantgreenKey)
-            response = 2;
+            response = 3;
             respToBeMade = false;
         elseif keyCode(christmasgreenKey)
-            response = 3;
+            response = 4;
             respToBeMade = false
         elseif keyCode(ferngreenKey)
-            response = 4;
+            response = 2;
             respToBeMade = false;
         end
     

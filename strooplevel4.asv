@@ -71,8 +71,8 @@ escapeKey= KbName('ESCAPE');
 %----------------------------------------------------------------------
 
 % For this condition we are using four types of Green!
-wordList = {'GRASS GREEN', 'FERN GREEN', 'VERDANT GREEN', 'CHRISTMAS GREEN'};
-rgbColors = [0.2 0.8 0; 0.2 0.7 0.1; 0.2 0.7 0.3; 0.2 0.9 0.5];
+wordList = {'GRASS GREEN', 'FERN GREEN', 'VERMONT GREEN', 'CHRISTMAS GREEN'};
+rgbColors = [0.2 0.8 0; 0.2 0.7 0.1; 0.2 0.7 0.4; 0.2 0.9 0.5];
 
 % Make the matrix which will determine our condition combinations
 condMatrixBase = [sort(repmat([1 2 3 4], 1, 3)); repmat([1 2 3 4], 1, 3)];
@@ -128,7 +128,7 @@ for trial = 1:numTrials
             'center', 'center', black);
         Screen('Flip', window);
         KbStrokeWait;
-        DrawFormattedText(window, 'A word will appear on your screen \n\n and will be colored either grass green, fern green, verdant green or Christmas green. \n\n If grass green, press the G key! \n\n If fern green, press the F key! \n\n If verdant green, press the V key!, \n\n If Christmas green, press the C key! \n\n Press any key to start!! \n\n  You can quit anytime by pressing ESC!','center', 'center', black);
+        DrawFormattedText(window, 'A word will appear on your screen \n\n and will be colored either grass green, fern green, \n\n Vermont green or Christmas green. \n\n If grass green, press the G key! \n\n If fern green, press the F key! \n\n If verdant green, press the V key!, \n\n If Christmas green, press the C key! \n\n Press any key to start!! \n\n  You can quit anytime by pressing ESC!','center', 'center', black);
         Screen('Flip', window);
         KbStrokeWait;
   
@@ -148,7 +148,7 @@ baseRect = [0 0 150 150];
 squareXpos = [screenXpixels * 0.2 screenXpixels * 0.4 screenXpixels*.6];
 numSquares = length(squareXpos);
 
-% Set the colors to 'GRASS GREEN, FERN GREEN, VERDANT GREEN, CHRISTMAS GREEN' 
+% Set the colors to 'GRASS GREEN, FERN GREEN, VERMONT GREEN, CHRISTMAS GREEN' 
 allColors1 = [.2 .2 .2 .2 ; .8 .7 .9 .7;  0 .1 .5 .1]
 
 % Make our rectangle coordinates
@@ -224,17 +224,13 @@ end
             response = 2;
             respToBeMade = false;
         elseif keyCode(christmasgreenKey)
-            response = 3;
+            response = 4;
             respToBeMade = false
         elseif keyCode(ferngreenKey)
-            response = 4;
+            response = 3;
             respToBeMade = false;
         end
-        if colorNum == response
-    respMat(5,trial) = 1
- else
-     respMat(5,trial)= 0
- end
+    
 
         % Change screen
         vbl = Screen('Flip', window, vbl + (waitframes - 0.5) * ifi);
@@ -247,6 +243,11 @@ end
     respMat(2, trial) = colorNum;
     respMat(3, trial) = response;
     respMat(4, trial) = rt;
+ if colorNum == response
+    respMat(5,trial) = 1
+ else
+     respMat(5,trial)= 0
+ end
 
 end
 
@@ -259,11 +260,14 @@ accuracypercent= (accuracy/12)*100
 
 % End of experiment screen. We clear the screen once they have made their
 % response
-DrawFormattedText(window, 'You have completed Level Four! \n\n Press any key to see your results',...
+DrawFormattedText(window, 'You have completed Level Four! Congrats! \n\n Press any key to see your results',...
     'center', 'center', black);
 Screen('Flip', window);
 KbStrokeWait;
-DrawFormattedText(window,' Below you will find your accuracy \n\n and your average reaction time!','center', 'center', black);
+DrawFormattedText(window, sprintf('Your average RT was: %d seconds  \n Press any key to see your score!', averagert),'center','center',black);
+Screen('Flip', window);
+KbStrokeWait;
+DrawFormattedText(window, sprintf('Your score was: %d percent! \n Thanks for playing! Press any key to end! ', accuracypercent),'center','center',black);
 Screen('Flip', window);
 KbStrokeWait;
 sca;
