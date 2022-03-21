@@ -289,7 +289,7 @@ KbStrokeWait;
 DrawFormattedText(window, strcat('Your average RT was:', RTdisp, 'seconds \n Press any key to see your score!'),'center','center',black);
 Screen('Flip', window);
 KbStrokeWait;
-DrawFormattedText(window, strcat('Your score was:', scoreDisp,  '%! \n Up next is Level 2! '),'center','center',black);
+DrawFormattedText(window, strcat('Your score was:', scoreDisp,  '%! \n Up next is Level 2! \n Click anywhere when you are ready to go on! '),'center','center',black);
 Screen('Flip', window);
 KbStrokeWait;
 sca;
