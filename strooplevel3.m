@@ -29,8 +29,9 @@ Screen('Flip', window);
 % Query the frame duration
 ifi = Screen('GetFlipInterval', window);
 
-% Set text size to 40
-Screen('TextSize', window, 40);
+% Set text size to 30; this is necessary as unlike the other levels, the
+% text will NOT fit within the screen parameters 
+Screen('TextSize', window, 30);
 
 % Query the maximum priority level
 topPriorityLevel = MaxPriority(window);
