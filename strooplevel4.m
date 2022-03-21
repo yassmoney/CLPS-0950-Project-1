@@ -211,6 +211,7 @@ KbStrokeWait;
     %Present isi interval, but subtract 1 interval for fixation dot 
     for frame = 1:isiTimeFrames - 1
 
+
         % Draw the fixation point at screen center 
         Screen('DrawDots', window, [xCenter; yCenter], 10, black, [], 2);
 
