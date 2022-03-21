@@ -1,6 +1,7 @@
 
+%----------------------------------------------------------------------
 
-n%-----n--m---------------------------------------------------------------
+%----------------------------------------------------------------------
 %                       Setting up PTB
 %----------------------------------------------------------------------
 
@@ -444,19 +445,19 @@ if RGBscore < 0.25
     'center', 'center', black);
     Screen('Flip', window);
     KbStrokeWait;
-    DrawFormattedText(window, 'You will now be continuing on to STROOP TEST LEVEL 1',...
+    DrawFormattedText(window, 'You will now be continuing on to STROOP TEST LEVEL 1 \n\n Press any key to continue',...
     'center', 'center', black);
     Screen('Flip', window);
 elseif RGBscore >= 0.25 && RGBscore < 0.50
-    DrawFormattedText(window, 'You will now be continuing on to STROOP TEST LEVEL 2',...
+    DrawFormattedText(window, 'You will now be continuing on to STROOP TEST LEVEL 2 \n\n Press any key to continue',...
     'center', 'center', black);
     Screen('Flip', window);
 elseif RGBscore >= 0.50 && RGBscore < 0.75
-    DrawFormattedText(window, 'You will now be continuing on to STROOP TEST LEVEL 3',...
+    DrawFormattedText(window, 'You will now be continuing on to STROOP TEST LEVEL 3 \n\n Press any key to continue',...
     'center', 'center', black);
     Screen('Flip', window);
 else 
-    DrawFormattedText(window, 'You will now be continuing on to STROOP TEST LEVEL 4',...
+    DrawFormattedText(window, 'You will now be continuing on to STROOP TEST LEVEL 4 \n\n Press any key to continue',...
     'center', 'center', black);
     Screen('Flip', window);
 end 
