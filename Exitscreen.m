@@ -1,8 +1,12 @@
-url = 'https://media3.giphy.com/media/Y1pwhvxvl50spPcwva/giphy.gif?cid=ecf05e4743w1swejm43kme52j2fs3f9tf7e6gim08p7dl0u5&rid=giphy.gif&ct=g';
-img = webread(url);
+newpic= imread("IMG_9390.jpg","jpg");
 
-fullFileName = 'Users/joenapolitano/Documents/GitHub/CLPS-0950-Project-1/giphy.gif'; 
-[gifImage, cmap] = imread(fullFileName, 'Frames', 'all');
-size(gifImage);
+position = [300 800]; 
+box_color = {'yellow'};
+text_str= ' This is the Stroop Groop after finishing our project! Bye!!:)'
 
-implay(gifImage);
+StroopGroop = insertText(newpic,position,text_str,'FontSize',50,'BoxColor',...
+    box_color,'BoxOpacity',.9,'TextColor','red');
+figure
+imshow(StroopGroop)
+KbStrokeWait;
+sca

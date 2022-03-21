@@ -1,8 +1,8 @@
-%% Intro Page %%
+ %% Intro Page %%
 
 
 
-pic= imread("IMG_9145.jpeg","jpg")
+pic= imread("IMG_9145.jpeg","jpg");
 
 position = [300 800]; 
 box_color = {'yellow'};
@@ -36,8 +36,5 @@ else
     run('strooplevel4.m')
 end
 
-KbStrokeWait
 run("Exitscreen.m")
 
-
-waitforbuttonpress

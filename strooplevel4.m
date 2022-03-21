@@ -258,16 +258,19 @@ averagert= averagereaction/12
 accuracy= sum((respMat(5,:)))
 accuracypercent= (accuracy/12)*100
 
+RTdisp= num2str(averagert)
+scoreDisp= num2str(accuracypercent)
+
 % End of experiment screen. We clear the screen once they have made their
 % response
 DrawFormattedText(window, 'You have completed Level Four! Congrats! \n\n Press any key to see your results',...
     'center', 'center', black);
 Screen('Flip', window);
 KbStrokeWait;
-DrawFormattedText(window, sprintf('Your average RT was: %d seconds  \n Press any key to see your score!', averagert),'center','center',black);
+DrawFormattedText(window, strcat('Your average RT was:', RTdisp, 'seconds \n Press any key to see your score!'),'center','center',black);
 Screen('Flip', window);
 KbStrokeWait;
-DrawFormattedText(window, sprintf('Your score was: %d percent! \n Thanks for playing! Press any key to end! ', accuracypercent),'center','center',black);
+DrawFormattedText(window, strcat('Your score was:', scoreDisp,  '%! \n Thanks for playing! Press any key to end! '),'center','center',black);
 Screen('Flip', window);
 KbStrokeWait;
 sca;

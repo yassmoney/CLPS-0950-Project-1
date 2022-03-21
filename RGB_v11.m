@@ -437,9 +437,10 @@ WaitSecs(0.2);
 DrawFormattedText(window, [strcat('Your score is: ','  ', scoreDisp, '%. \n\n Press any key to continue.')],...
     'center', 'center', black);
 Screen('Flip', window);
+KbStrokeWait
 
 if RGBscore < 0.25
-    DrawFormattedText(window, 'You might be color blind! \n\n Just kidding lol we are not medical professionals, \n\n but you might just be stupid (aw rip)',...
+    DrawFormattedText(window, 'You might be color blind! \n\n Just kidding lol we are not medical professionals \n\n ',...
     'center', 'center', black);
     Screen('Flip', window);
     KbStrokeWait;
