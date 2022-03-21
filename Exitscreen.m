@@ -1,5 +1,5 @@
-newpic= imread("IMG_9390.jpg","jpg");
 
+newpic= imread("IMG_9390.jpg","jpg");
 position = [300 800]; 
 box_color = {'yellow'};
 text_str= ' This is the Stroop Groop after finishing our project! Bye!!:)'
