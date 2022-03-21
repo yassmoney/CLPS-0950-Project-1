@@ -257,8 +257,8 @@ tStart = GetSecs;%recording the start time of trial
 
     % Record the trial data into data matrix
     respMat(1, trial) = wordNum; %number corrosponding to word (1-4)
-    respMat(2, trial) = colorNum; %number corrospondong to color of word (1-4) 
-    respMat(3, trial) = response; %number corrospondong to color chosen by test taker (1-4) 
+    respMat(2, trial) = colorNum; %number corrosponding to color of word (1-4) 
+    respMat(3, trial) = response; %number corrosponding to color chosen by test taker (1-4) 
     respMat(4, trial) = rt; %response time in seconds 
  if colorNum == response %boolean response; if number representing color of words is a match to the color chosen, considered correct (1), if not matched, incorrect (0)
     respMat(5,trial) = 1

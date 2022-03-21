@@ -77,7 +77,7 @@ waitframes = 1;
 % Here we are defining the keys that we need to use for responses. In this
 % particular level, we will use g,r,y,b to stand for each the colors in
 % this level
-% We will be using escape to escape the task.
+% Again, we will be using escape to escape the task.
 greenKey = KbName('g');
 redKey = KbName('r');
 yellowKey = KbName('y');
@@ -86,20 +86,19 @@ escapeKey= KbName('ESCAPE');
 
 
 
-%----------------------------------------------------------------------
+%----------------- -----------------------------------------------------
 %                     Colors in words and RGB
 %----------------------------------------------------------------------
 
-% For this condition we are using the four most basic colors we can create
-% in order to make it fairly easy 
-wordList = {'RED', 'GREEN', 'BLUE', 'YELLOW'};%Defining the words to be used
-rgbColors = [1 0 0; 0 1 0; 0 0 1; 1 1 0];%defining the color RGB color code for each of the 4 words
+% We are going to use four colors!
+wordList = {'RED', 'GREEN', 'BLUE', 'YELLOW'};
+rgbColors = [1 0 0; 0 1 0; 0 0 1; 1 1 0];
 
 % Make the matrix which will determine our condition combinations
-condMatrixBase = [sort(repmat([1 2 3 4], 1, 3)); repmat([1 2 3 4], 1, 3)];% This matrix is 12 columns wide, allowing us to record the results of each trial
+condMatrixBase = [sort(repmat([1 2 3 4], 1, 3)); repmat([1 2 3 4], 1, 3)];
 
-
-% This is for the number of trials per condition, giving us a total of 12 trials.
+% Number of trials per condition. We set this to one to give
+% us a total of 16 trials.
 trialsPerCondition = 1;
 
 % Duplicate the condition matrix to get the full number of trials
@@ -108,8 +107,7 @@ condMatrix = repmat(condMatrixBase, 1, trialsPerCondition);
 % Get the size of the matrix
 [~, numTrials] = size(condMatrix);
 
-% To randomize the conditions so that a randomly chosen word is presented in a
-% randomly chosen color
+% Randomise the conditions
 shuffler = Shuffle(1:numTrials);
 condMatrixShuffled = condMatrix(:, shuffler);
 
@@ -118,11 +116,9 @@ condMatrixShuffled = condMatrix(:, shuffler);
 %                     Make a response matrix
 %----------------------------------------------------------------------
 
-% Four row matrix; 
-% row 1 = word presented; 
-% row 2 = color of word; 
-% row 3 = key which was pressed in response to stimulus; 
-% row 4 = response time 
+% This is a four row matrix the first row will record the word we present,
+% the second row the color the word it written in, the third row the key
+% they respond with and the final row the time they took to make there response.
 respMat = nan(4, numTrials);
 
 
@@ -130,7 +126,7 @@ respMat = nan(4, numTrials);
 %                       Experimental loop
 %----------------------------------------------------------------------
 
-% For loop for total number of trials
+% Animation loop: we loop for the total number of trials
 for trial = 1:numTrials
 
     % Word and color number
@@ -148,64 +144,58 @@ for trial = 1:numTrials
     % key-press
     if trial == 1
         DrawFormattedText(window, 'Welcome to the Stroop Test Level 1! \n\n Press any key to see instructions!',...
-            'center', 'center', black); %Welcome screen
+            'center', 'center', black);
         Screen('Flip', window);
         KbStrokeWait;
         DrawFormattedText(window, 'A word will appear on your screen \n\n and will be colored either red, yellow, green or blue.\n\n If green, press the g key! \n\n If red, press the r key! \n\n If yellow, press the y key!, \n\n If blue, press the b key! \n\n Press any key to start!! \n\n  You can quit anytime by pressing ESC!','center', 'center', black)
-        Screen('Flip', window);%Task directions text
+        Screen('Flip', window);
         KbStrokeWait;
-
 %----------------------------------------------------------------------
 %                       Priming Screen for Colors: 
 %----------------------------------------------------------------------
-% First, need to get actual size of the on screen window
+ % Get the size of the on screen window
 [screenXpixels, screenYpixels] = Screen('WindowSize', window);
 
-% Find center coordinate (to be used for center rectange, if using 3) 
+% Get the centre coordinate of the window
 [xCenter, yCenter] = RectCenter(windowRect);
 
-% Set size of rectangle (We are using 150 pixels by 150 pixels because we
-% need 4 of them to fit the screen
+% Make a base Rect of 200 by 200 pixels
 baseRect = [0 0 150 150];
 
-% Screen X positions of our THREE rectangles (we must use two sets of three and have an
-% overlapping rectangle) 
-squareXpos = [screenXpixels * 0.2 screenXpixels * 0.4 screenXpixels*.6];% this represents the left edge placement of three rectangles, begining on the LEFT)  
-numSquares = length(squareXpos);%this is just referring to the right most edge of each
-
-% Set the colors to Red, Green, Blue, BLACK
-allColors1 = [1 0 0 ; 0 1 0 ;  0 0 0 ]%Set the RBG values of each rectangle; The order is as follows: [R R R; G G G ; B B B ]; the order is not [1,2,3,] but instead is [1, 4, X,]; This allows for the correct order on screen during the test. This will be more clear in upper levels. 
-
-% Rectangle coordinates; placing rectangles on earlier-specified
-% coordinates, starting from LEFT
-allRects = nan(4, 3);
-for i = 1:numSquares
-    allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
-end
-
-% REPEAT!!!! (Necessary in order to create 4 in line rectangles) 
-Screen('FillRect', window, allColors1, allRects);
-
-% Base rectangle of 150 x 150 pixels
-baseRect = [0 0 150 150];
-
-% Screen X positions of our second set of 3 rectangles
-squareXpos = [screenXpixels * 0.8 screenXpixels * 0.6 screenXpixels*.4];%These rectangles begin at the RIGHT side of the screen, with coordinates representing the left most edge; the last of these rectangles overlaps with the second of the first set.
+% Screen X positions of our four rectangles
+squareXpos = [screenXpixels * 0.2 screenXpixels * 0.4 screenXpixels*.6];
 numSquares = length(squareXpos);
 
-% Set the colors to green, blue and yellow
-allColors = [ 0 0 1 ; 1 0 1 ; 0 1 0 ]%Set the RBG values of each rectangle; The order is as follows: [R R R ; G G G ; B B B ]; the order is not [1,2,3,] but instead is [4, 3, 2]; This allows for the correct order on screen during the test.
+% Set the colors to Red, Green and Blue
+allColors1 = [1 0 0 ; 0 1 0 ;  0 0 0 ]
 
-% Rectangle coordinates; placing rectangles on earlier-specified
-% coordinates, starting from RIGHT
+% Make our rectangle coordinates
+allRects = nan(4, 3);
+for i = 1:numSquares
+    allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
+end
+
+% Draw the rect to the screen
+Screen('FillRect', window, allColors1, allRects);
+
+% Make a base Rect of 200 by 200 pixels
+baseRect = [0 0 150 150];
+
+% Screen X positions of our four rectangles
+squareXpos = [screenXpixels * 0.8 screenXpixels * 0.6 screenXpixels*.4];
+numSquares = length(squareXpos);
+
+% Set the colors to Red, Green and Blue
+allColors = [ 0 0 1 ; 1 0 1 ; 0 1 0 ]
+
+% Make our rectangle coordinates
 allRects = nan(4, 3);
 for i = 1:numSquares
     allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
 end
 
 
-%Drawing Rectangles and Labeling each with correct labels at specified
-%height
+% Draw the rect to the screen
 Screen('FillRect', window, allColors, allRects);
 DrawFormattedText(window,'Red           Yellow          Blue         Green',150,400)
 
@@ -215,64 +205,66 @@ Screen('Flip', window);
 % Wait for a key press
 KbStrokeWait;
     end
-%----------------------------------------------------------------------
-%                       ACTUAL TEST!! : 
-%----------------------------------------------------------------------
 
-    % Flip to new screen, begin with central dot to prime spot where words
-    % will appear
+    % Flip again to sync us to the vertical retrace at the same time as
+    % drawing our fixation point
     Screen('DrawDots', window, [xCenter; yCenter], 10, black, [], 2);
     vbl = Screen('Flip', window);
 
-   %Present isi interval, but subtract 1 interval for fixation dot 
+    % Now we present the interval with fixation point minus one frame
+    % because we presented the fixation point once already when getting a
+    % time stamp
     for frame = 1:isiTimeFrames - 1
 
- % Draw the fixation point at screen center 
- Screen('DrawDots', window, [xCenter; yCenter], 10, black, [], 2);
+        % Draw the fixation point
+        Screen('DrawDots', window, [xCenter; yCenter], 10, black, [], 2);
 
         % Flip to the screen
         vbl = Screen('Flip', window, vbl + (waitframes - 0.5) * ifi);
     end
+
+    % Now present the word in continuous loops until the person presses a
+    % key to respond. We take a time stamp before and after to calculate
+    % our reaction time.
+    %
     
-    tStart = GetSecs;%recording the start time of trial 
+    tStart = GetSecs;
     while respToBeMade == true
 
-         % create the word "Color" in a randomly chose color 
+        % Draw the word
         DrawFormattedText(window, char(theWord), 'center', 'center', theColor);
 
-         % Checking the keyboard for accuracy of keys; necessary in order to
-        % correctly calculate the accuracy of trials. Setting accurate
-        % response to corrosponding keys
+        % Check the keyboard. The person should press the
         [keyIsDown,secs, keyCode] = KbCheck;
         if keyCode(escapeKey)
             ShowCursor;
             sca;
             return
-        elseif keyCode(redKey)%R key corrosponds to color 1 (red) 
+        elseif keyCode(redKey)
             response = 1;
             respToBeMade = false;
-        elseif keyCode(blueKey)%B key corrosponds to color 3 (blue)
+        elseif keyCode(blueKey)
             response = 3;
             respToBeMade = false;
-        elseif keyCode(yellowKey)%Y key corrosponds to color 4 (yellow)
+        elseif keyCode(yellowKey)
             response = 4;
             respToBeMade = false;
-        elseif keyCode(greenKey)%G key corrosponds to color 2 (green)
+        elseif keyCode(greenKey)
             response= 2;
             respToBeMade = false;
         end
 
-     % Change screen
+        % Flip to the screen
         vbl = Screen('Flip', window, vbl + (waitframes - 0.5) * ifi);
     end
-    tEnd = GetSecs;%recording the end time of trial 
-    rt = tEnd - tStart;%calculating response time; End of trial - Start of trial  
+    tEnd = GetSecs;
+    rt = tEnd - tStart;
 
     % Record the trial data into out data matrix
-    respMat(1, trial) = wordNum;%number corrosponding to word (1-4)
-    respMat(2, trial) = colorNum;%number corrosponding to color of word (1-4) 
-    respMat(3, trial) = response;%number corrosponding to color chosen by test taker (1-4) 
-    respMat(4, trial) = rt;%response time in seconds 
+    respMat(1, trial) = wordNum;
+    respMat(2, trial) = colorNum;
+    respMat(3, trial) = response;
+    respMat(4, trial) = rt;
 
  if colorNum == response
     respMat(5,trial) = 1
