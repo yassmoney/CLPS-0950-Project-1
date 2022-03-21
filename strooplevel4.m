@@ -3,6 +3,10 @@ close all;
 clear;
 sca;
 
+%----------------------------------------------------------------------
+%                       Defining Information
+%----------------------------------------------------------------------
+
 % Setting up default values
 PsychDefaultSetup(2);
 
@@ -13,12 +17,12 @@ rand('seed', sum(100 * clock));
 % connected
 screenNumber = max(Screen('Screens'));
 
-% Define black, white and grey
+% Define black, white and grey, 
 white = WhiteIndex(screenNumber);
-grey = white / .5; % making a lighter background
+grey = white / .5; % making a lighter background (otherwise will play on grey, which makes contrast too difficult to discern
 black = BlackIndex(screenNumber);
 
-% Open the screen
+% Open the screen, defined as 1000 x 1000 matrix
 [window, windowRect] = PsychImaging('OpenWindow', 0, [255 255 255], [0 0 1000 1000], screenNumber, grey, [], 32, 2);
 
 % Flip to clear
@@ -27,13 +31,13 @@ Screen('Flip', window);
 % Query the frame duration
 ifi = Screen('GetFlipInterval', window);
 
-% Set  text size
+% Set text size to 40
 Screen('TextSize', window, 40);
 
 % Query the maximum priority level
 topPriorityLevel = MaxPriority(window);
 
-% Get the centre coordinate of the window
+% find the centre point of the window
 [xCenter, yCenter] = RectCenter(windowRect);
 
 % Set the blend funciton for the screen
@@ -59,23 +63,24 @@ waitframes = 1;
 % Here we are defining the keys that we need to use for responses. In this
 % particular level, we will use g,f,v,c as they have not yet been used.
 % Again, we will be using escape to escape the task.
-grassgreenKey = KbName('g');
-ferngreenKey = KbName('f');
-vermontgreenKey = KbName('v');
-christmasgreenKey = KbName('c');
-escapeKey= KbName('ESCAPE');
+grassgreenKey = KbName('g'); %for color 1
+ferngreenKey = KbName('f');%for color 2
+vermontgreenKey = KbName('v');%for color 3
+christmasgreenKey = KbName('c');%for color 4
+escapeKey= KbName('ESCAPE');%End 
 
 
 %----------------------------------------------------------------------
 %                     Colors in words and RGB
 %----------------------------------------------------------------------
 
-% For this condition we are using four types of Green!
-wordList = {'GRASS GREEN', 'FERN GREEN', 'VERMONT GREEN', 'CHRISTMAS GREEN'};
-rgbColors = [0.2 0.8 0; 0.2 0.7 0.1; 0.2 0.7 0.4; 0.2 0.9 0.5];
+% For this condition we are using four types of Green, as green is the
+% hardest color to differentiate for most color blind people
+wordList = {'GRASS GREEN', 'FERN GREEN', 'VERMONT GREEN', 'CHRISTMAS GREEN'};%Defining the words to be used
+rgbColors = [0.2 0.8 0; 0.2 0.7 0.1; 0.2 0.7 0.4; 0.2 0.9 0.5];%defining the color RGB color code for each of the 4 words
 
 % Make the matrix which will determine our condition combinations
-condMatrixBase = [sort(repmat([1 2 3 4], 1, 3)); repmat([1 2 3 4], 1, 3)];
+condMatrixBase = [sort(repmat([1 2 3 4], 1, 3)); repmat([1 2 3 4], 1, 3)];% This matrix is 12 columns wide, allowing us to record the results of each trial
 
 % This is for the number of trials per condition, giving us a total of 12 trials.
 trialsPerCondition = 1;
@@ -86,13 +91,14 @@ condMatrix = repmat(condMatrixBase, 1, trialsPerCondition);
 % Size of matrix
 [~, numTrials] = size(condMatrix);
 
-% This is here to randomize the conditions
+% To randomize the conditions so that a randomly chosen word is presented in a
+% randomly chosen color
 shuffler = Shuffle(1:numTrials);
 condMatrixShuffled = condMatrix(:, shuffler);
 
 
 %----------------------------------------------------------------------
-%                     Make a response matrix
+%                    Response matrix
 %----------------------------------------------------------------------
 
 % Four row matrix; 
@@ -125,11 +131,11 @@ for trial = 1:numTrials
     % key-press
     if trial == 1
         DrawFormattedText(window, 'Welcome to the Stroop Test Level 4! \n\n Press any key to see instructions!',...
-            'center', 'center', black);
+            'center', 'center', black); %Welcome screen
         Screen('Flip', window);
         KbStrokeWait;
         DrawFormattedText(window, 'A word will appear on your screen \n\n and will be colored either grass green, fern green, \n\n Vermont green or Christmas green. \n\n If grass green, press the G key! \n\n If fern green, press the F key! \n\n If Vermont green, press the V key!, \n\n If Christmas green, press the C key! \n\n Press any key to start!! \n\n  You can quit anytime by pressing ESC!','center', 'center', black);
-        Screen('Flip', window);
+        Screen('Flip', window);%Task directions text
         KbStrokeWait;
   
 %----------------------------------------------------------------------
@@ -146,7 +152,7 @@ for trial = 1:numTrials
 % need 4 of them to fit the screen
 baseRect = [0 0 150 150];
 
-% Screen X positions of our THREE rectangles (we must use three and have an
+% Screen X positions of our THREE rectangles (we must use two sets of three and have an
 % overlapping rectangle) 
 squareXpos = [screenXpixels * 0.2 screenXpixels * 0.4 screenXpixels*.6];% this represents the left edge placement of three rectangles, begining on the LEFT)  
 numSquares = length(squareXpos);%this is just referring to the right most edge of each
@@ -155,7 +161,7 @@ numSquares = length(squareXpos);%this is just referring to the right most edge o
 allColors1 = [.2 .2 .2 .2 ; .8 .7 .9 .7;  0 .4 .5 .1] %Set the RBG values of each rectangle; The order is as follows: [R R R R; G G G G; B B B B]; the order is not [1,2,3,4,] but instead is [1, 4, 3, 2]; This allows for the correct order on screen during the test. 
 
 % Rectangle coordinates; placing rectangles on earlier-specified
-% coordinates
+% coordinates, starting from LEFT
 allRects = nan(4, 4); 
 for i = 1:numSquares
     allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
@@ -164,27 +170,29 @@ end
 % REPEAT!!!! (Necessary in order to create 4 in line rectangles) 
 Screen('FillRect', window, allColors1, allRects);
 
-% Make a base Rect of 200 by 200 pixels
+% Base rectangle of 150 x 150
 baseRect = [0 0 150 150];
 
-% Screen X positions of our four rectangles
-squareXpos = [screenXpixels * 0.8 screenXpixels * 0.6 screenXpixels*.4];
+% Screen X positions of our second set of 3 rectangles
+squareXpos = [screenXpixels * 0.8 screenXpixels * 0.6 screenXpixels*.4]; %These rectangles begin at the RIGHT side of the screen, with coordinates representing the left most edge; the last of these rectangles overlaps with the second of the first set.
 numSquares = length(squareXpos);
 
-% Set the colors to GRASS GREEN, FERN GREEN, VERDANT GREEN, CHRISTMAS GREEN 
-allColors = [ .2 .2 .2 .2 ; .9 .7 .7 .8;  .5 .4 .1 0]
+% Set the colors to GRASS GREEN, FERN GREEN, VERMONT GREEN, CHRISTMAS GREEN 
+allColors = [ .2 .2 .2 .2 ; .9 .7 .7 .8;  .5 .4 .1 0]%Set the RBG values of each rectangle; The order is as follows: [R R R R; G G G G; B B B B]; the order is not [1,2,3,4,] but instead is [4, 3, 2, 1]; This allows for the correct order on screen during the test. 
 
-% Make our rectangle coordinates
+% Rectangle coordinates; placing rectangles on earlier-specified
+% coordinates, starting from RIGHT
 allRects = nan(4, 4);
 for i = 1:numSquares
     allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
 end
 
-% Draw the rect to the screen
+%Drawing Rectangles and Labeling each with correct labels at specified
+%height
 Screen('FillRect', window, allColors, allRects);
-DrawFormattedText(window,'Grass        Fern       Vermont      Christmas',150,400)
+DrawFormattedText(window,'Grass        Fern       Vermont      Christmas',150,400)%labels for each square in order 1,2,3,4
 
-% Flip to the screen
+% Flip to next screen
 Screen('Flip', window);
 
 % Wait for a key press
@@ -195,25 +203,24 @@ KbStrokeWait;
 %                       ACTUAL TEST!! : 
 %----------------------------------------------------------------------
 
-    % Flip again to sync us to the vertical retrace at the same time as
-    % drawing our fixation point
+    % Flip to new screen, begin with central dot to prime spot where words
+    % will appear
     Screen('DrawDots', window, [xCenter; yCenter], 10, black, [], 2);
     vbl = Screen('Flip', window);
 
-    % Now we present the isi interval with fixation point minus one frame
-    % because we presented the fixation point once already when getting a
-    % time stamp
+    %Present isi interval, but subtract 1 interval for fixation dot 
     for frame = 1:isiTimeFrames - 1
 
-        % Draw the fixation point
+        % Draw the fixation point at screen center 
         Screen('DrawDots', window, [xCenter; yCenter], 10, black, [], 2);
 
         % Flip to the screen
         vbl = Screen('Flip', window, vbl + (waitframes - 0.5) * ifi);
     end
 
-    tStart = GetSecs;
-    while respToBeMade == true
+tStart = GetSecs;%recording the start time of trial 
+    while respToBeMade == true  
+
 
         % create the word "Color" in a randomly chose color 
         DrawFormattedText(window, char(theWord), 'center', 'center', theColor);
