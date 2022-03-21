@@ -282,30 +282,42 @@ KbStrokeWait;
 
  end
 
-% Result Data
+%----------------------------------------------------------------------
+%                      Accuracy and Response Time Data: 
+%----------------------------------------------------------------------
+% Setting results; Average reaction time and accuracy of trial 
 
+%reaction time; average of 12 trials 
 averagereaction= sum(respMat(4,:))
 averagert= averagereaction/12
  
+%accuracy of trials; average of 12 trials multiplied by 100 for a percentage out of 100.
 accuracy= sum((respMat(5,:)))
 accuracypercent= (accuracy/12)*100
 
- 
+% setting variables for display results (to be utilized in later screen) 
 RTdisp= num2str(averagert)
 scoreDisp= num2str(accuracypercent)
 
-% End of experiment screen. We clear the screen once they have made their
-% response
+%Flip to post-experiment screen; Formatting text screen
 DrawFormattedText(window, 'You have completed Level One! \n\n Press any key to see your results',...
     'center', 'center', black);
+
+%flip to results screen 
 Screen('Flip', window);
 KbStrokeWait;
+
+%Display Stroop test 4 reaction time in seconds
 DrawFormattedText(window, strcat('Your average RT was:', RTdisp, 'seconds \n Press any key to see your score!'),'center','center',black);
 Screen('Flip', window);
 KbStrokeWait;
+
+%Display Stroop test 4 score (out of 100); present screen for next level
 DrawFormattedText(window, strcat('Your score was:', scoreDisp,  '%! \n Up next is Level 2! \n Click anywhere when you are ready to go on! '),'center','center',black);
 Screen('Flip', window);
 KbStrokeWait;
+
+%clear, prepare for next level 
 sca;
 
 
