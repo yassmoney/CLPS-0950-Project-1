@@ -61,7 +61,7 @@ waitframes = 1;
 % Again, we will be using escape to escape the task.
 grassgreenKey = KbName('g');
 ferngreenKey = KbName('f');
-verdantgreenKey = KbName('v');
+vermontgreenKey = KbName('v');
 christmasgreenKey = KbName('c');
 escapeKey= KbName('ESCAPE');
 
@@ -135,29 +135,33 @@ for trial = 1:numTrials
 %----------------------------------------------------------------------
 %                       Priming Screen for Colors: 
 %----------------------------------------------------------------------
-        % Get the size of the on screen window
+
+% First, need to get actual size of the on screen window
 [screenXpixels, screenYpixels] = Screen('WindowSize', window);
 
-% Get the centre coordinate of the window
+% Find center coordinate (to be used for center rectange, if using 3) 
 [xCenter, yCenter] = RectCenter(windowRect);
 
-% Make a base Rect of 200 by 200 pixels
+% Set size of rectangle (We are using 150 pixels by 150 pixels because we
+% need 4 of them to fit the screen
 baseRect = [0 0 150 150];
 
-% Screen X positions of our four rectangles
-squareXpos = [screenXpixels * 0.2 screenXpixels * 0.4 screenXpixels*.6];
-numSquares = length(squareXpos);
+% Screen X positions of our THREE rectangles (we must use three and have an
+% overlapping rectangle) 
+squareXpos = [screenXpixels * 0.2 screenXpixels * 0.4 screenXpixels*.6];% this represents the left edge placement of three rectangles, begining on the LEFT)  
+numSquares = length(squareXpos);%this is just referring to the right most edge of each
 
 % Set the colors to 'GRASS GREEN, FERN GREEN, VERMONT GREEN, CHRISTMAS GREEN' 
-allColors1 = [.2 .2 .2 .2 ; .8 .7 .9 .7;  0 .4 .5 .1]
+allColors1 = [.2 .2 .2 .2 ; .8 .7 .9 .7;  0 .4 .5 .1] %Set the RBG values of each rectangle; The order is as follows: [R R R R; G G G G; B B B B]; the order is not [1,2,3,4,] but instead is [1, 4, 3, 2]; This allows for the correct order on screen during the test. 
 
-% Make our rectangle coordinates
-allRects = nan(4, 4);
+% Rectangle coordinates; placing rectangles on earlier-specified
+% coordinates
+allRects = nan(4, 4); 
 for i = 1:numSquares
     allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
 end
 
-% Draw the rect to the screen
+% REPEAT!!!! (Necessary in order to create 4 in line rectangles) 
 Screen('FillRect', window, allColors1, allRects);
 
 % Make a base Rect of 200 by 200 pixels
@@ -186,7 +190,10 @@ Screen('Flip', window);
 % Wait for a key press
 KbStrokeWait;
 
-end
+    end
+%----------------------------------------------------------------------
+%                       ACTUAL TEST!! : 
+%----------------------------------------------------------------------
 
     % Flip again to sync us to the vertical retrace at the same time as
     % drawing our fixation point
@@ -208,25 +215,27 @@ end
     tStart = GetSecs;
     while respToBeMade == true
 
-        % create the word
+        % create the word "Color" in a randomly chose color 
         DrawFormattedText(window, char(theWord), 'center', 'center', theColor);
 
-        % Check the keyboard. The person should press the
+        % Checking the keyboard for accuracy of keys; necessary in order to
+        % correctly calculate the accuracy of trials. Setting accurate
+        % response to corrosponding keys
         [keyIsDown,secs, keyCode] = KbCheck;
         if keyCode(escapeKey)
             ShowCursor;
             sca;
             return
-        elseif keyCode(grassgreenKey)
+        elseif keyCode(grassgreenKey) %G key corrosponds to color 1 (grass) 
             response = 1;
             respToBeMade = false;
-        elseif keyCode(verdantgreenKey)
+        elseif keyCode(vermontgreenKey)%V key corrosponds to color 3 (Vermont) 
             response = 3;
             respToBeMade = false;
-        elseif keyCode(christmasgreenKey)
+        elseif keyCode(christmasgreenKey)%C key corrosponds to color 4 (Christmas)
             response = 4;
-            respToBeMade = false
-        elseif keyCode(ferngreenKey)
+            respToBeMade = false;
+        elseif keyCode(ferngreenKey)%F key corrosponds to color 2 (Fern)
             response = 2;
             respToBeMade = false;
         end
@@ -235,15 +244,15 @@ end
         % Change screen
         vbl = Screen('Flip', window, vbl + (waitframes - 0.5) * ifi);
     end
-    tEnd = GetSecs;
-    rt = tEnd - tStart;
+    tEnd = GetSecs;%recording the end time of trial 
+    rt = tEnd - tStart; %calculating response time; End of trial - Start of trial  
 
-    % Record the trial data into out data matrix
-    respMat(1, trial) = wordNum;
-    respMat(2, trial) = colorNum;
-    respMat(3, trial) = response;
-    respMat(4, trial) = rt;
- if colorNum == response
+    % Record the trial data into data matrix
+    respMat(1, trial) = wordNum; %number corrosponding to word (1-4)
+    respMat(2, trial) = colorNum; %number corrospondong to color of word (1-4) 
+    respMat(3, trial) = response; %number corrospondong to color chosen by test taker (1-4) 
+    respMat(4, trial) = rt; %response time in seconds 
+ if colorNum == response %boolean response; if number representing color of words is a match to the color chosen, considered correct (1), if not matched, incorrect (0)
     respMat(5,trial) = 1
  else
      respMat(5,trial)= 0
@@ -251,25 +260,38 @@ end
 
 end
 
-% Result Data; Average reaction time and accuracy of trial 
+%----------------------------------------------------------------------
+%                      Accuracy and Response Time Data: 
+%----------------------------------------------------------------------
+% Setting results; Average reaction time and accuracy of trial 
+%reaction time; average of 12 trials 
 averagereaction= sum(respMat(4,:))
 averagert= averagereaction/12
- 
+
+%accuracy of trials; average of 12 trials multiplied by 100 for a percentage out of 100.  
 accuracy= sum((respMat(5,:)))
 accuracypercent= (accuracy/12)*100
 
+% setting variables for display results (to be utilized in later screen)
 RTdisp= num2str(averagert)
 scoreDisp= num2str(accuracypercent)
 
-% End of experiment screen. We clear the screen once they have made their
-% response
+
+
+%Flip to post-experiment screen; Formatting text screen
 DrawFormattedText(window, 'You have completed Level Four! Congrats! \n\n Press any key to see your results',...
     'center', 'center', black);
+
+%flip to results screen 
 Screen('Flip', window);
 KbStrokeWait;
+
+%Display Stroop test 4 reaction time in seconds
 DrawFormattedText(window, strcat('Your average RT was:', RTdisp, 'seconds \n Press any key to see your score!'),'center','center',black);
 Screen('Flip', window);
 KbStrokeWait;
+
+%Display Stroop test 4 score (out of 100)
 DrawFormattedText(window, strcat('Your score was:', scoreDisp,  '%! \n Thanks for playing! Press any key to end! '),'center','center',black);
 Screen('Flip', window);
 KbStrokeWait;
