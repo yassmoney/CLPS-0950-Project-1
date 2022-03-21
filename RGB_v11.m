@@ -438,7 +438,28 @@ DrawFormattedText(window, [strcat('Your score is: ','  ', scoreDisp, '%. \n\n Pr
     'center', 'center', black);
 Screen('Flip', window);
 
-KbStrokeWait;
+if RGBscore < 0.25
+    DrawFormattedText(window, 'You might be color blind! \n\n Just kidding lol we are not medical professionals, \n\n but you might just be stupid (aw rip)',...
+    'center', 'center', black);
+    Screen('Flip', window);
+    KbStrokeWait;
+    DrawFormattedText(window, 'You will now be continuing on to STROOP TEST LEVEL 1',...
+    'center', 'center', black);
+    Screen('Flip', window);
+elseif RGBscore >= 0.25 && RGBscore < 0.50
+    DrawFormattedText(window, 'You will now be continuing on to STROOP TEST LEVEL 2',...
+    'center', 'center', black);
+    Screen('Flip', window);
+elseif RGBscore >= 0.50 && RGBscore < 0.75
+    DrawFormattedText(window, 'You will now be continuing on to STROOP TEST LEVEL 3',...
+    'center', 'center', black);
+    Screen('Flip', window);
+else 
+    DrawFormattedText(window, 'You will now be continuing on to STROOP TEST LEVEL 4',...
+    'center', 'center', black);
+    Screen('Flip', window);
+end 
 
+KbStrokeWait;
 % Clear the screen
 sca;

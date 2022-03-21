@@ -125,7 +125,7 @@ for trial = 1:numTrials
             'center', 'center', black);
         Screen('Flip', window);
         KbStrokeWait;
-        DrawFormattedText(window, 'A word will appear on your screen \n\n and will be colored either pink, orange, lavender or maroon. \n\n If pink, press the P key! \n\n If orange, press the O key! \n\n If lavender, press the L key!, \n\n If maroon, press the M key! \n\n Press any key to start!! \n\n  You can quit anytime by pressing ESC!','center', 'center', black);
+        DrawFormattedText(window, 'A word will appear on your screen \n\n and will be colored either \n\n pink, orange, lavender or maroon. \n\n If pink, press the P key! \n\n If orange, press the O key! \n\n If lavender, press the L key!, \n\n If maroon, press the M key! \n\n Press any key to start!! \n\n  You can quit anytime by pressing ESC!','center', 'center', black);
         Screen('Flip', window);
         KbStrokeWait;
     
@@ -275,7 +275,7 @@ KbStrokeWait;
 DrawFormattedText(window, sprintf('Your average RT was: %d seconds \n Press any key to see your score!', averagert),'center','center',black);
 Screen('Flip', window);
 KbStrokeWait;
-DrawFormattedText(window, sprintf('Your score was: %d percent!  \n ', accuracypercent),'center','center',black);
+DrawFormattedText(window, sprintf('Your score was: %d percent!Get ready for Level 3! Press any key to start!  \n ', accuracypercent),'center','center',black);
 Screen('Flip', window);
 KbStrokeWait;
 sca;
