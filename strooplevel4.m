@@ -299,8 +299,10 @@ DrawFormattedText(window, strcat('Your average RT was:', RTdisp, 'seconds \n Pre
 Screen('Flip', window);
 KbStrokeWait;
 
-%Display Stroop test 4 score (out of 100)
+%Display Stroop test 4 score (out of 100); present end screen 
 DrawFormattedText(window, strcat('Your score was:', scoreDisp,  '%! \n Thanks for playing! Press any key to end! '),'center','center',black);
 Screen('Flip', window);
 KbStrokeWait;
+
+%clear
 sca;
