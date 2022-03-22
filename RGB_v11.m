@@ -43,7 +43,7 @@ nKey = KbName('n')
 [screenXpixels, screenYpixels] = Screen('WindowSize', window);
 
 % Get the centre coordinate of the window
-[xCenter, yCenter] = RectCenter(windowRect);jj
+[xCenter, yCenter] = RectCenter(windowRect);
 
 % nQuery nth  e frame duration
 % ifi = Screen('GetFlipInterval', window);

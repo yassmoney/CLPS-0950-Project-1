@@ -9,7 +9,7 @@ pic= imread("IMG_9145.jpeg","jpg");
 
 position = [-3 800]; 
 box_color = {'yellow'};
-text_str= 'This is the Stroop Groop! Click anywhere to begin! :)'
+text_str= 'This is the Stroop Groop! Press any key to begin! :)'
 
 Stroop = insertText(pic,position,text_str,'FontSize',50,'BoxColor',...
     box_color,'BoxOpacity',.9,'TextColor','red');
