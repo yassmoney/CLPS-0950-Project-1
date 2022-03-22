@@ -3,6 +3,11 @@ close all;
 clear;
 sca;
 
+%----------------------------------------------------------------------
+%                       Defining Information
+%----------------------------------------------------------------------
+
+
 % Setting up default values
 PsychDefaultSetup(2);
 
@@ -15,10 +20,10 @@ screenNumber = max(Screen('Screens'));
 
 % Define black, white and grey
 white = WhiteIndex(screenNumber);
-grey = white / .5; % making a lighter background
+grey = white / .5; % making a lighter background (otherwise will play on grey, which makes contrast too difficult to discern
 black = BlackIndex(screenNumber);
 
-% Open the screen
+% Open the screen, defined as 1000 x 1000 white matrix
 [window, windowRect] = PsychImaging('OpenWindow', 0, [255 255 255], [0 0 1000 1000], screenNumber, grey, [], 32, 2);
 % Flip to clear
 Screen('Flip', window);
@@ -26,7 +31,7 @@ Screen('Flip', window);
 % Query the frame duration   
 ifi = Screen('GetFlipInterval', window);
 
-% Set the text size
+% Set text size to 40
 Screen('TextSize', window, 40);
 
 % Query the maximum priority level
@@ -43,7 +48,7 @@ Screen('BlendFunction', window, 'GL_SRC_ALPHA', 'GL_ONE_MINUS_SRC_ALPHA');
 %                       Timing Information
 %----------------------------------------------------------------------
 
-% Interstimulus interval time in seconds and frames
+% Stimulus interval time in seconds and frames
 isiTimeSecs = 1;
 isiTimeFrames = round(isiTimeSecs / ifi);
 
@@ -55,25 +60,26 @@ waitframes = 1;
 %                       Keyboard Presses
 %----------------------------------------------------------------------
 
-% Define the keyboard keys that are listened for. We will be using the left
-% and right arrow keys as response keys for the task and the escape key as
-% a exit/reset key
-pinkKey = KbName('p');
-orangeKey = KbName('o');
-lavenderKey = KbName('l');
-maroonKey = KbName('m');
-escapeKey= KbName('ESCAPE');
+% Here we are defining the keys that we need to use for responses. In this
+% particular level, we will use p,o,l,m as they have not yet been used.
+% Again, we will be using escape to escape the task.
+pinkKey = KbName('p'); %for color 1
+orangeKey = KbName('o'); %for color 2
+lavenderKey = KbName('l'); %for color 3
+maroonKey = KbName('m'); %for color 4
+escapeKey= KbName('ESCAPE'); % end
 
 %----------------------------------------------------------------------
 %                     Colors in words and RGB
 %----------------------------------------------------------------------
 
-% We are going to use four colors!
-wordList = {'PINK', 'ORANGE', 'LAVENDER', 'MAROON'};
-rgbColors = [0.9 0.6 0.7; 1 0.6 0; 0.9 0.6 1; 0.5 0 0.1];
+% For this condition we are using four colors which are less obviously
+% different than in level one
+wordList = {'PINK', 'ORANGE', 'LAVENDER', 'MAROON'};%Defining the color names to be used
+rgbColors = [0.9 0.6 0.7; 1 0.6 0; 0.9 0.6 1; 0.5 0 0.1];%defining the color RGB color code for each of the 4 words
 
 % Make the matrix which will determine our condition combinations
-condMatrixBase = [sort(repmat([1 2 3 4], 1, 3)); repmat([1 2 3 4], 1, 3)];
+condMatrixBase = [sort(repmat([1 2 3 4], 1, 3)); repmat([1 2 3 4], 1, 3)];% This matrix is 12 columns wide, allowing us to record the results of each trial
 
 % Number of trials per condition. We set this to one to give
 % us a total of 12 trials.
@@ -85,7 +91,8 @@ condMatrix = repmat(condMatrixBase, 1, trialsPerCondition);
 % Get the size of the matrix
 [~, numTrials] = size(condMatrix);
 
-% Randomise the conditions
+% To randomize the conditions so that a randomly chosen word is presented in a
+% randomly chosen color
 shuffler = Shuffle(1:numTrials);
 condMatrixShuffled = condMatrix(:, shuffler);
 
@@ -94,9 +101,11 @@ condMatrixShuffled = condMatrix(:, shuffler);
 %                     Make a response matrix
 %----------------------------------------------------------------------
 
-% This is a four row matrix the first row will record the word we present,
-% the second row the color the word it written in, the third row the key
-% they respond with and the final row the time they took to make there response.
+% Four row matrix; 
+% row 1 = word presented; 
+% row 2 = color of word; 
+% row 3 = key which was pressed in response to stimulus; 
+% row 4 = response time 
 respMat = nan(4, numTrials);
 
 
@@ -104,7 +113,7 @@ respMat = nan(4, numTrials);
 %                       Experimental loop
 %----------------------------------------------------------------------
 
-% Animation loop: we loop for the total number of trials
+% For loop for total number of trials
 for trial = 1:numTrials
 
     % Word and color number
@@ -122,60 +131,65 @@ for trial = 1:numTrials
     % key-press
     if trial == 1
         DrawFormattedText(window, 'Welcome to the Stroop Test Level 2! \n\n Press any key to see instructions!',...
-            'center', 'center', black);
+            'center', 'center', black);%Welcome screen
         Screen('Flip', window);
         KbStrokeWait;
         DrawFormattedText(window, 'A word will appear on your screen \n\n and will be colored either \n\n pink, orange, lavender or maroon. \n\n If pink, press the P key! \n\n If orange, press the O key! \n\n If lavender, press the L key!, \n\n If maroon, press the M key! \n\n Press any key to start!! \n\n  You can quit anytime by pressing ESC!','center', 'center', black);
-        Screen('Flip', window);
+        Screen('Flip', window);%Task directions text
         KbStrokeWait;
     
 %----------------------------------------------------------------------
 %                       Priming Screen for Colors: 
 %----------------------------------------------------------------------
-        % Get the size of the on screen window
+% First, need to get actual size of the on screen window
 [screenXpixels, screenYpixels] = Screen('WindowSize', window);
 
-% Get the centre coordinate of the window
+% Find center coordinate (to be used for center rectange, if using 3) 
 [xCenter, yCenter] = RectCenter(windowRect);
 
-% Make a base Rect of 200 by 200 pixels
+% Set size of rectangle (We are using 150 pixels by 150 pixels because we
+% need 4 of them to fit the screen
 baseRect = [0 0 150 150];
 
-% Screen X positions of our four rectangles
-squareXpos = [screenXpixels * 0.2 screenXpixels * 0.4 screenXpixels*.6];
-numSquares = length(squareXpos);
+% Screen X positions of our THREE rectangles (we must use two sets of three and have an
+% overlapping rectangle) 
+squareXpos = [screenXpixels * 0.2 screenXpixels * 0.4 screenXpixels*.6];% this represents the left edge placement of three rectangles, begining on the LEFT)  
+numSquares = length(squareXpos);%this is just referring to the right most edge of each
 
 % Set the colors to Pink, Lavender, Maroon, and Orange
-allColors1 = [.9 .9 1 .5 ; .6 .6 .6 0;  .7 1 0 .1 ]
+allColors1 = [.9 .9 1 .5 ; .6 .6 .6 0;  .7 1 0 .1 ]%Set the RBG values of each rectangle; The order is as follows: [R R R R; G G G G; B B B B]; the order is not [1,2,3,4,] but instead is [1, 4, 3, 2]; This allows for the correct order on screen during the test. 
 
-% Make our rectangle coordinates
+% Rectangle coordinates; placing rectangles on earlier-specified
+% coordinates, starting from LEFT
 allRects = nan(4, 4);
 for i = 1:numSquares
     allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
 end
 
-% Draw the rect to the screen
+% REPEAT!!!! (Necessary in order to create 4 in line rectangles) 
 Screen('FillRect', window, allColors1, allRects);
 
-% Make a base Rect of 200 by 200 pixels
+% Base rectangle of 150 x 150 pixels
 baseRect = [0 0 150 150];
 
-% Screen X positions of our four rectangles
+% Screen X positions of our second set of 3 rectangles
 squareXpos = [screenXpixels * 0.8 screenXpixels * 0.6 screenXpixels*.4];
 numSquares = length(squareXpos);
 
-% Set the colors to Red, Green and Blue
-allColors = [ .5 .9 1 .5 ; 0 .6 .6 0;  .1 1 0 .1  ]
+% Set the colors to Pink, Lavender, Maroon, and Orange
+allColors = [ .5 .9 1 .5 ; 0 .6 .6 0;  .1 1 0 .1  ]%Set the RBG values of each rectangle; The order is as follows: [R R R R; G G G G; B B B B]; the order is not [1,2,3,4,] but instead is [4, 3, 2, 1]; This allows for the correct order on screen during the test. 
 
-% Make our rectangle coordinates
+% Rectangle coordinates; placing rectangles on earlier-specified
+% coordinates, starting from RIGHT
 allRects = nan(4, 4);
 for i = 1:numSquares
     allRects(:, i) = CenterRectOnPointd(baseRect, squareXpos(i), yCenter);
 end
 
-% Draw the rect to the screen
+%Drawing Rectangles and Labeling each with correct labels at specified
+%height
 Screen('FillRect', window, allColors, allRects);
-DrawFormattedText(window,'Pink          Orange      Lavender     Maroon  ',150,400)
+DrawFormattedText(window,'Pink          Orange      Lavender     Maroon  ',150,400)%labels for each square in order 1,2,3,4
 
 % Flip to the screen
 Screen('Flip', window);
@@ -184,72 +198,65 @@ Screen('Flip', window);
 KbStrokeWait;
 
     end
-
-    % Flip again to sync us to the vertical retrace at the same time as
-    % drawing our fixation point
+%----------------------------------------------------------------------
+%                       ACTUAL TEST!! : 
+%----------------------------------------------------------------------
+     % Flip to new screen, begin with central dot to prime spot where words
+    % will appear
     Screen('DrawDots', window, [xCenter; yCenter], 10, black, [], 2);
     vbl = Screen('Flip', window);
 
-    % Now we present the isi interval with fixation point minus one frame
-    % because we presented the fixation point once already when getting a
-    % time stamp
+    %Present isi interval, but subtract 1 interval for fixation dot 
     for frame = 1:isiTimeFrames - 1
 
-        % Draw the fixation point
+        % Draw the fixation point at screen center 
         Screen('DrawDots', window, [xCenter; yCenter], 10, black, [], 2);
 
         % Flip to the screen
         vbl = Screen('Flip', window, vbl + (waitframes - 0.5) * ifi);
     end
 
-    % Now present the word in continuous loops until the person presses a
-    % key to respond. We take a time stamp before and after to calculate
-    % our reaction time. We could do this directly with the vbl time stamps,
-    % but for the purposes of this introductory demo we will use GetSecs.
-    %
-    % The person should be asked to respond to either the written word or
-    % the color the word is written in. They make thier response with the
-    % three arrow key. They should press "Left" for "Red", "Down" for
-    % "Green" and "Right" for "Blue".
-    tStart = GetSecs;
+    tStart = GetSecs;%recording the start time of trial 
     while respToBeMade == true
 
-        % Draw the word
-        DrawFormattedText(window, char(theWord), 'center', 'center', theColor);
+% create the word "Color" in a randomly chose color 
+DrawFormattedText(window, char(theWord), 'center', 'center', theColor);
 
-        % Check the keyboard. The person should press the
+        % Checking the keyboard for accuracy of keys; necessary in order to
+        % correctly calculate the accuracy of trials. Setting accurate
+        % response to corrosponding keys
         [keyIsDown,secs, keyCode] = KbCheck;
         if keyCode(escapeKey)
             ShowCursor;
             sca;
             return
-        elseif keyCode(pinkKey)
+        elseif keyCode(pinkKey)%P key corrosponds to color 1 (pink) 
             response = 1;
             respToBeMade = false;
-        elseif keyCode(maroonKey)
+        elseif keyCode(maroonKey)%M key corrosponds to color 4 (maroon) 
             response = 4;
             respToBeMade = false;
-        elseif keyCode(orangeKey)
+        elseif keyCode(orangeKey)%O key corrosponds to color 2 (orange)
             response = 2;
             respToBeMade = false;
-        elseif keyCode(lavenderKey)
+        elseif keyCode(lavenderKey)%L key corrosponds to color 4 (lavender)
             response = 3;
             respToBeMade = false;
         end
 
-        % Flip to the screen
+            % Change screen
         vbl = Screen('Flip', window, vbl + (waitframes - 0.5) * ifi);
     end
-    tEnd = GetSecs;
-    rt = tEnd - tStart;
+    tEnd = GetSecs;%recording the end time of trial 
+    rt = tEnd - tStart;%calculating response time; End of trial - Start of trial  
 
     % Record the trial data into out data matrix
-    respMat(1, trial) = wordNum;
-    respMat(2, trial) = colorNum;
-    respMat(3, trial) = response;
-    respMat(4, trial) = rt;
+    respMat(1, trial) = wordNum;%number corrosponding to word (1-4)
+    respMat(2, trial) = colorNum;%number corrosponding to color of word (1-4) 
+    respMat(3, trial) = response;%number corrosponding to color chosen by test taker (1-4) 
+    respMat(4, trial) = rt;%response time in seconds 
    
-    if colorNum == response
+    if colorNum == response%boolean response; if number representing color of words is a match to the color chosen, considered correct (1), if not matched, incorrect (0)
     respMat(5,trial) = 1
  else
      respMat(5,trial)= 0
@@ -257,27 +264,40 @@ KbStrokeWait;
 
 end
 
-% Result Data
+%----------------------------------------------------------------------
+%                      Accuracy and Response Time Data: 
+%----------------------------------------------------------------------
+% Setting results; Average reaction time and accuracy of trial 
 
+%reaction time; average of 12 trials 
 averagereaction= sum(respMat(4,:))
 averagert= averagereaction/12
- 
+
+%accuracy of trials; average of 12 trials multiplied by 100 for a percentage out of 100.  
 accuracy= sum((respMat(5,:)))
 accuracypercent= (accuracy/12)*100
 
+% setting variables for display results (to be utilized in later screen)
 RTdisp= num2str(averagert)
 scoreDisp= num2str(accuracypercent)
 
-% End of experiment screen. We clear the screen once they have made their
-% response
+%Flip to post-experiment screen; Formatting text screen
 DrawFormattedText(window, 'You have completed Level Two! \n\n Press any key to see your results',...
     'center', 'center', black);
+
+%flip to results screen 
 Screen('Flip', window);
 KbStrokeWait;
+
+%Display Stroop test 4 reaction time in seconds
 DrawFormattedText(window, strcat('Your average RT was:', RTdisp, 'seconds \n Press any key to see your score!'),'center','center',black);
 Screen('Flip', window);
 KbStrokeWait;
+
+%Display Stroop test 4 score (out of 100); present screen for next level
 DrawFormattedText(window, strcat('Your score was:', scoreDisp,  '%! \n Get ready for Level 3! Press any key to start! '),'center','center',black);
 Screen('Flip', window);
 KbStrokeWait;
+
+%clear, prepare for next level 
 sca;

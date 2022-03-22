@@ -1,12 +1,15 @@
  %% Intro Page %%
 
 
+% This section calls in a photo we took at the start of this project! and
+% displays a figure introducing the stroop groop
 
 pic= imread("IMG_9145.jpeg","jpg");
 
-position = [300 800]; 
+
+position = [-3 800]; 
 box_color = {'yellow'};
-text_str= ' This is the Stroop Groop :)'
+text_str= 'This is the Stroop Groop! Click anywhere to begin! :)'
 
 Stroop = insertText(pic,position,text_str,'FontSize',50,'BoxColor',...
     box_color,'BoxOpacity',.9,'TextColor','red');
@@ -16,9 +19,10 @@ imshow(Stroop)
 
 %% Merging Content %%
 
-KbStrokeWait;
+KbStrokeWait;%waits for key press to begin game
 
-run("RGB_v11.m")
+run("RGB_v11.m") % the RGB Anamaloscope game will indicate which level of the Stroop Test individuals will do!
+
 
 if RGBscore <= .25
     run("strooplevel1.m")
