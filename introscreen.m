@@ -1,4 +1,4 @@
- %% Intro Page %%
+  %% Intro Page %%
 
 
 % This section calls in a photo we took at the start of this project! and
