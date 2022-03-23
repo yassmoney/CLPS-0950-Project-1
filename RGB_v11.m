@@ -45,7 +45,7 @@ nKey = KbName('n')
 % Get the centre coordinate of the window
 [xCenter, yCenter] = RectCenter(windowRect);
 
-% Query the frame duration
+% nQuery nth  e frame duration
 % ifi = Screen('GetFlipInterval', window);
 
 %----------------------------------------------------------------------
@@ -115,7 +115,7 @@ while trialNum < 12
         return
     elseif keyCode(nextKey) || keyCode(nKey)
         WaitSecs(0.2);
-        %Generate random Red and Green values
+        %Generate random Red and Green values between 50 and 
         r_given = randi([50,220],1)/255;
         r_given_exp = abs(r_given - randi([50,220],1)/255);
         g_given = randi([100,220],1)/255;
@@ -123,10 +123,10 @@ while trialNum < 12
         g_given_exp = abs(g_given - randi([100,220],1)/255);
         
         %Create variable to randomize the trialType
-            %trialType 1: r is changed, final squares can match
-            %trialType 2: r is changed, final squaresn cannot match
-            %trialType 3: g is changed, final squares can match
-            %trialType 4: g is changed, final squares cannot match
+            %trialType 1: red channel value is changed by slider, final squares can match
+            %trialType 2: red channel value is changed by slider, final squares cannot match
+            %trialType 3: green channel value is changed by sider, final squares can match
+            %trialType 4: green channel value is changed by slider, final squares cannot match
         trialType = randi(4,1);
         
         % Make our rectangle coordinates
