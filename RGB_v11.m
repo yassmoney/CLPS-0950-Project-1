@@ -440,7 +440,7 @@ DrawFormattedText(window, [strcat('Your score is: ','  ', scoreDisp, '%. \n\n Pr
 Screen('Flip', window);
 KbStrokeWait
 
-if RGBscore < 0.25
+if RGBscore <= 0.25
     DrawFormattedText(window, 'You might be color blind! \n\n Just kidding lol we are not medical professionals \n\n ',...
     'center', 'center', black);
     Screen('Flip', window);
@@ -448,11 +448,11 @@ if RGBscore < 0.25
     DrawFormattedText(window, 'You will now be continuing on to STROOP TEST LEVEL 1 \n\n Press any key to continue',...
     'center', 'center', black);
     Screen('Flip', window);
-elseif RGBscore >= 0.25 && RGBscore < 0.50
+elseif RGBscore > 0.25 && RGBscore <= 0.50
     DrawFormattedText(window, 'You will now be continuing on to STROOP TEST LEVEL 2 \n\n Press any key to continue',...
     'center', 'center', black);
     Screen('Flip', window);
-elseif RGBscore >= 0.50 && RGBscore < 0.75
+elseif RGBscore > 0.50 && RGBscore <= 0.75
     DrawFormattedText(window, 'You will now be continuing on to STROOP TEST LEVEL 3 \n\n Press any key to continue',...
     'center', 'center', black);
     Screen('Flip', window);
