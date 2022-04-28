@@ -83,12 +83,13 @@ waitframes = 1;
 
 % Here we are defining the keys that we need to use for responses.
 % We will be using escape to escape the task.
-upKey = KbName('up');
+upKey = KbName('uparrow');
 downKey = KbName('downarrow');
 leftKey = KbName('leftarrow');
 rightKey = KbName('rightarrow');
 escapeKey= KbName('ESCAPE');
 
+Screen('Flip', window);
 DrawFormattedText(window, 'Choose which task you want to play! \n\n For RGB Anomaloscope, press the up key! \n\n For Priming Test, press the down key! \n\n For Stroop Test, press the left key!, \n\n For the Working Memory Test, press the right key! \n\n  You can quit anytime by pressing ESC!','center', 'center', black); %game menu
 Screen('Flip', window);
 KbStrokeWait
@@ -98,14 +99,16 @@ if keyCode(escapeKey)
             ShowCursor;
             sca;
             return
-        elseif keyCode(upKey)
+   elseif keyCode(upKey)
             run("RGB_v11.m")
-        elseif keyCode(leftKey)
+   elseif keyCode(leftKey)
             run("strooplevel1.m")
             run("strooplevel2.m")
             run("strooplevel3.m")
             run('strooplevel4.m')
+          
   
 end
-run("Exitscreen.m")
+
+
 
