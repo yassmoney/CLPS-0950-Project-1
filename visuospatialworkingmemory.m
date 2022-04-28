@@ -17,7 +17,7 @@ screenNumber = max(Screen('Screens'));
 
 % Define black, white and grey
 white = WhiteIndex(screenNumber);
-grey = white / 2;
+grey = white / .5;
 black = BlackIndex(screenNumber);
 
 % Open the screen
@@ -99,7 +99,7 @@ stimValues = linspace(-orRange / 2, orRange / 2, numSteps) + baseOrientation;
 % Now we set the number of times we want to do each condition, then make a
 % full condition vector and then shuffle it. This will randomly order the
 % orientation we present our Gabor with on each trial.
-numRepeats = 15;
+numRepeats = 3;
 condVector = Shuffle(repmat(stimValues, 1, numRepeats));
 
 % Calculate the number of trials
@@ -139,6 +139,8 @@ waitframes = 1;
 escapeKey = KbName('ESCAPE');
 leftKey = KbName('LeftArrow');
 rightKey = KbName('RightArrow');
+upKey = KbName('UpArrow');
+downKey= KbName('DownArrow');
 
 
 %----------------------------------------------------------------------
@@ -163,7 +165,7 @@ for trial = 1:numTrials
     % If this is the first trial we present a start screen and wait for a
     % key-press
     if trial == 1
-        DrawFormattedText(window, 'Press Any Key To Begin', 'center', 'center', black);
+        DrawFormattedText(window, 'Press Any Key To Begin! A texture will appear either in the \n\n top, bottom, left, or right part of the screen. Afterwards, an empty screen will \n\n come up and you will press the arrow associated with the orientation. ', 'center', 'center', black);
         Screen('Flip', window);
         KbStrokeWait;
     end
@@ -233,6 +235,13 @@ for trial = 1:numTrials
         elseif keyCode(rightKey)
             response = 0;
             respToBeMade = false;
+        elseif keyCode(upKey)
+            response = 3;
+            respToBeMade = false;
+        elseif keyCode(downKey)
+            response = 4;
+            respToBeMade = false;
+
         end
     end
 

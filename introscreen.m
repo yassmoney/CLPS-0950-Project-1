@@ -99,9 +99,9 @@ if keyCode(escapeKey)
             ShowCursor;
             sca;
             return
-   elseif keyCode(upKey)
+elseif keyCode(upKey)
             run("RGB_v11.m")
-   elseif keyCode(leftKey)
+elseif keyCode(leftKey)
             run("strooplevel1.m")
             run("strooplevel2.m")
             run("strooplevel3.m")
