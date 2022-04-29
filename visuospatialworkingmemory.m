@@ -20,10 +20,11 @@ white = WhiteIndex(screenNumber);
 grey = white / .5;
 black = BlackIndex(screenNumber);
 
-% Open the screen
-[window, windowRect] = PsychImaging('OpenWindow', screenNumber, grey, [], 32, 2,...
-    [], [],  kPsychNeed32BPCFloat);
+% Open the screen, defined as 1000 x 1000 matrix
+[window, windowRect] = PsychImaging('OpenWindow', 0, [255 255 255], [0 0 1000 1000], screenNumber, grey, [], 32, 2);
+%Here screen is opened just for changing the SyncTest preferencesk
 
+ 
 % Flip to clear
 Screen('Flip', window);
 
